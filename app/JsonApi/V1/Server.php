@@ -32,7 +32,11 @@ class Server extends BaseServer
     protected function allSchemas(): array
     {
         return [
-            Images\ImageSchema::class
+            Collections\CollectionSchema::class,
+            Images\ImageSchema::class,
+            Keywords\KeywordSchema::class,
+            Comments\CommentSchema::class,
+            Locations\LocationSchema::class,
         ];
     }
 

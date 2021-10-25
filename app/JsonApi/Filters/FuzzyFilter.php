@@ -66,8 +66,14 @@ class FuzzyFilter implements Filter
      */
     public function apply($query, $value)
     {
-        return $query->where(
-            DB::raw('lower(images.title)'), 'like', '%' . strtolower($value) . '%'
-        );
+        $terms = explode(',', $value);
+
+        foreach($terms as $k => $term) {
+            $query->where(
+                DB::raw('lower(images.title)'), 'like', '%' . strtolower($term) . '%'
+            );
+        }
+
+        return $query;
     }
 }

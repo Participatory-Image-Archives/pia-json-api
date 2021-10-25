@@ -22,5 +22,9 @@ use LaravelJsonApi\Laravel\Http\Controllers\JsonApiController;
 JsonApiRoute::server('v1')
     ->prefix('v1')
     ->resources(function ($server) {
+        $server->resource('collections', JsonApiController::class);
         $server->resource('images', JsonApiController::class);
+        $server->resource('keywords', JsonApiController::class);
+        $server->resource('comments', JsonApiController::class);
+        $server->resource('locations', JsonApiController::class);
     });

@@ -1,20 +1,18 @@
 <?php
 
-namespace App\JsonApi\V1\Images;
+namespace App\JsonApi\V1\Collections;
 
-use App\Models\Image;
+use App\Models\Collection;
 use LaravelJsonApi\Eloquent\Contracts\Paginator;
 use LaravelJsonApi\Eloquent\Fields\DateTime;
 use LaravelJsonApi\Eloquent\Fields\ID;
 use LaravelJsonApi\Eloquent\Fields\Str;
-use LaravelJsonApi\Eloquent\Fields\Relations\BelongsToMany;
-use LaravelJsonApi\Eloquent\Fields\Relations\BelongsTo;
 use LaravelJsonApi\Eloquent\Filters\WhereIdIn;
-use App\JsonApi\Filters\FuzzyFilter;
+use LaravelJsonApi\Eloquent\Filters\Where;
 use LaravelJsonApi\Eloquent\Pagination\PagePagination;
 use LaravelJsonApi\Eloquent\Schema;
 
-class ImageSchema extends Schema
+class CollectionSchema extends Schema
 {
 
     /**
@@ -22,7 +20,7 @@ class ImageSchema extends Schema
      *
      * @var string
      */
-    public static string $model = Image::class;
+    public static string $model = Collection::class;
 
     /**
      * Get the resource fields.
@@ -33,6 +31,9 @@ class ImageSchema extends Schema
     {
         return [
             ID::make(),
+            Str::make('title'),
+            Str::make('signature'),
+            Str::make('origin'),
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
         ];
@@ -47,7 +48,7 @@ class ImageSchema extends Schema
     {
         return [
             WhereIdIn::make($this),
-            FuzzyFilter::make('title')
+            Where::make('origin')
         ];
     }
 
