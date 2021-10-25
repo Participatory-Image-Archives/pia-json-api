@@ -8,6 +8,7 @@ use LaravelJsonApi\Eloquent\Fields\DateTime;
 use LaravelJsonApi\Eloquent\Fields\ID;
 use LaravelJsonApi\Eloquent\Fields\Str;
 use LaravelJsonApi\Eloquent\Filters\WhereIdIn;
+use App\JsonApi\Filters\FuzzyFilter;
 use LaravelJsonApi\Eloquent\Pagination\PagePagination;
 use LaravelJsonApi\Eloquent\Schema;
 
@@ -46,6 +47,7 @@ class ImageSchema extends Schema
     {
         return [
             WhereIdIn::make($this),
+            FuzzyFilter::make('title')
         ];
     }
 
