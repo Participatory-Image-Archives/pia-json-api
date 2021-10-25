@@ -33,6 +33,14 @@ class ImageSchema extends Schema
     {
         return [
             ID::make(),
+            Str::make('title'),
+            Str::make('signature'),
+
+            BelongsTo::make('location'),
+            BelongsToMany::make('keywords'),
+            BelongsToMany::make('collections'),
+            BelongsToMany::make('comments'),
+
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
         ];

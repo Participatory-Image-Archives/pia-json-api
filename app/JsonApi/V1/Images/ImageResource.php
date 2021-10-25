@@ -36,7 +36,7 @@ class ImageResource extends JsonApiResource
     {
         return [
             $this->relation('collections'),
-            $this->relation('keywords'),
+            $this->relation('keywords')->showDataIfLoaded(),
             $this->relation('comments'),
             $this->relation('locations'),
         ];
