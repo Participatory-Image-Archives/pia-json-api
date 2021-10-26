@@ -15,9 +15,13 @@ class Collection extends Model
     protected $connection = 'pia';
     
     protected $fillable = [
+        'salsah_id',
         'label',
         'signature',
-        'origin'
+        'description',
+        'default_image',
+        'embedded_video',
+        'origin',
     ];
 
     public function altLabels()

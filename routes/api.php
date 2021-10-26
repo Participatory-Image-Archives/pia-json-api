@@ -23,23 +23,28 @@ JsonApiRoute::server('v1')
     ->prefix('v1')
     ->resources(function ($server) {
         $server->resource('collections', JsonApiController::class)->relationships(function ($relationships) {
+            $relationships->hasMany('images');
+            $relationships->hasMany('comments');
             $relationships->hasMany('people');
             $relationships->hasMany('literatures');
             $relationships->hasMany('dates');
-            $relationships->hasMany('comments');
             $relationships->hasMany('alt-labels');
         });
-        $server->resource('albums', JsonApiController::class);
         $server->resource('images', JsonApiController::class)->relationships(function ($relationships) {
             $relationships->hasMany('collections');
             $relationships->hasMany('keywords');
             $relationships->hasMany('comments');
             $relationships->hasOne('location');
         });
+        $server->resource('albums', JsonApiController::class);
+
         $server->resource('keywords', JsonApiController::class)->relationships(function ($relationships) {
             $relationships->hasMany('alt-labels');
         });
-        $server->resource('comments', JsonApiController::class);
+        $server->resource('comments', JsonApiController::class)->relationships(function ($relationships) {
+            $relationships->hasMany('collections');
+            $relationships->hasMany('images');
+        });
         $server->resource('alt-labels', JsonApiController::class);
 
         $server->resource('locations', JsonApiController::class);
