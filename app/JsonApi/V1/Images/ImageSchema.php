@@ -37,10 +37,10 @@ class ImageSchema extends Schema
 
             HasOne::make('location'),
             HasOne::make('verso'),
-            BelongsTo::make('object_type')->serializeUsing(
+            BelongsTo::make('object-type')->serializeUsing(
                 static fn($relation) => $relation->alwaysShowData()
               ),
-            BelongsTo::make('model_type')->serializeUsing(
+            BelongsTo::make('model-type')->serializeUsing(
                 static fn($relation) => $relation->alwaysShowData()
               ),
             BelongsTo::make('format')->serializeUsing(

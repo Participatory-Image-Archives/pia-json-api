@@ -42,12 +42,12 @@ class Image extends Model
         return $this->hasOne(Image::Class, 'verso_id');
     }
 
-    public function object_type()
+    public function objectType()
     {
         return $this->hasOne(ObjectType::Class);
     }
 
-    public function model()
+    public function modelType()
     {
         return $this->hasOne(ModelType::Class);
     }

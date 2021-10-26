@@ -6,6 +6,8 @@ use App\Models\Location;
 use LaravelJsonApi\Eloquent\Contracts\Paginator;
 use LaravelJsonApi\Eloquent\Fields\DateTime;
 use LaravelJsonApi\Eloquent\Fields\ID;
+use LaravelJsonApi\Eloquent\Fields\Str;
+use LaravelJsonApi\Eloquent\Fields\Number;
 use LaravelJsonApi\Eloquent\Filters\WhereIdIn;
 use LaravelJsonApi\Eloquent\Pagination\PagePagination;
 use LaravelJsonApi\Eloquent\Schema;
@@ -29,6 +31,11 @@ class LocationSchema extends Schema
     {
         return [
             ID::make(),
+            Str::make('label'),
+            Str::make('geonames_id'),
+            Str::make('geonames_url'),
+            Number::make('latitude'),
+            Number::make('longitude'),
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
         ];

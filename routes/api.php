@@ -30,7 +30,9 @@ JsonApiRoute::server('v1')
             $relationships->hasMany('comments');
             $relationships->hasOne('location');
         });
-        $server->resource('keywords', JsonApiController::class);
+        $server->resource('keywords', JsonApiController::class)->relationships(function ($relationships) {
+            $relationships->hasMany('alt-labels');
+        });
         $server->resource('comments', JsonApiController::class);
         $server->resource('alt-labels', JsonApiController::class);
 
