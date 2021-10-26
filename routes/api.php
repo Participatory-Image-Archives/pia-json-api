@@ -23,7 +23,12 @@ JsonApiRoute::server('v1')
     ->prefix('v1')
     ->resources(function ($server) {
         $server->resource('collections', JsonApiController::class);
-        $server->resource('images', JsonApiController::class);
+        $server->resource('images', JsonApiController::class)->relationships(function ($relationships) {
+            $relationships->hasMany('collections');
+            $relationships->hasMany('keywords');
+            $relationships->hasMany('comments');
+            $relationships->hasOne('location');
+        });
         $server->resource('keywords', JsonApiController::class);
         $server->resource('comments', JsonApiController::class);
         $server->resource('locations', JsonApiController::class);
