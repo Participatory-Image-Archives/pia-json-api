@@ -22,7 +22,13 @@ use LaravelJsonApi\Laravel\Http\Controllers\JsonApiController;
 JsonApiRoute::server('v1')
     ->prefix('v1')
     ->resources(function ($server) {
-        $server->resource('collections', JsonApiController::class);
+        $server->resource('collections', JsonApiController::class)->relationships(function ($relationships) {
+            $relationships->hasMany('people');
+            $relationships->hasMany('literatures');
+            $relationships->hasMany('dates');
+            $relationships->hasMany('comments');
+            $relationships->hasMany('alt-labels');
+        });
         $server->resource('albums', JsonApiController::class);
         $server->resource('images', JsonApiController::class)->relationships(function ($relationships) {
             $relationships->hasMany('collections');

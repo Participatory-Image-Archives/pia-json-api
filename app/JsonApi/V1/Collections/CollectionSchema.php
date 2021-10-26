@@ -7,6 +7,7 @@ use LaravelJsonApi\Eloquent\Contracts\Paginator;
 use LaravelJsonApi\Eloquent\Fields\DateTime;
 use LaravelJsonApi\Eloquent\Fields\ID;
 use LaravelJsonApi\Eloquent\Fields\Str;
+use LaravelJsonApi\Eloquent\Fields\Relations\BelongsToMany;
 use LaravelJsonApi\Eloquent\Filters\WhereIdIn;
 use LaravelJsonApi\Eloquent\Filters\Where;
 use LaravelJsonApi\Eloquent\Pagination\PagePagination;
@@ -34,6 +35,13 @@ class CollectionSchema extends Schema
             Str::make('title'),
             Str::make('signature'),
             Str::make('origin'),
+
+            BelongsToMany::make('people'),
+            BelongsToMany::make('literatures'),
+            BelongsToMany::make('dates'),
+            BelongsToMany::make('comments'),
+            BelongsToMany::make('alt-labels'),
+
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
         ];

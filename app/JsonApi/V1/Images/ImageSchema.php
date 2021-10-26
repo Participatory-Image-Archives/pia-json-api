@@ -50,6 +50,7 @@ class ImageSchema extends Schema
             BelongsToMany::make('keywords'),
             BelongsToMany::make('collections'),
             BelongsToMany::make('comments'),
+            BelongsToMany::make('dates'),
 
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
