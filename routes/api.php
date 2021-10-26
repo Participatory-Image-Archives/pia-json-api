@@ -23,6 +23,7 @@ JsonApiRoute::server('v1')
     ->prefix('v1')
     ->resources(function ($server) {
         $server->resource('collections', JsonApiController::class);
+        $server->resource('albums', JsonApiController::class);
         $server->resource('images', JsonApiController::class)->relationships(function ($relationships) {
             $relationships->hasMany('collections');
             $relationships->hasMany('keywords');
@@ -31,5 +32,17 @@ JsonApiRoute::server('v1')
         });
         $server->resource('keywords', JsonApiController::class);
         $server->resource('comments', JsonApiController::class);
+        $server->resource('alt-labels', JsonApiController::class);
+
         $server->resource('locations', JsonApiController::class);
+        $server->resource('places', JsonApiController::class);
+
+        $server->resource('literatures', JsonApiController::class);
+        $server->resource('jobs', JsonApiController::class);
+        $server->resource('people', JsonApiController::class);
+
+        $server->resource('dates', JsonApiController::class);
+        $server->resource('formats', JsonApiController::class);
+        $server->resource('model-types', JsonApiController::class);
+        $server->resource('object-types', JsonApiController::class);
     });

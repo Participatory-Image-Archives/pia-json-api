@@ -33,10 +33,23 @@ class Server extends BaseServer
     {
         return [
             Collections\CollectionSchema::class,
+            Albums\AlbumSchema::class,
             Images\ImageSchema::class,
             Keywords\KeywordSchema::class,
             Comments\CommentSchema::class,
+            AltLabels\AltLabelSchema::class,
+            
             Locations\LocationSchema::class,
+            Places\PlaceSchema::class,
+
+            People\PersonSchema::class,
+            Jobs\JobSchema::class,
+            Literatures\LiteratureSchema::class,
+
+            Dates\DateSchema::class,
+            Formats\FormatSchema::class,
+            ModelTypes\ModelTypeSchema::class,
+            ObjectTypes\ObjectTypeSchema::class,
         ];
     }
 

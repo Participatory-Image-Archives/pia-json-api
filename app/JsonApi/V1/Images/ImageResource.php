@@ -19,10 +19,15 @@ class ImageResource extends JsonApiResource
     public function attributes($request): iterable
     {
         return [
-            'title' => $this->title,
+            'salsah_id' => $this->salsah_id,
+            'oldnr' => $this->oldnr,
             'signature' => $this->signature,
-            'createdAt' => $this->created_at,
-            'updatedAt' => $this->updated_at,
+            'title' => $this->title,
+            'original_title' => $this->original_title,
+            'file_name' => $this->file_name,
+            'original_file_name' => $this->original_file_name,
+            'salsah_date' => $this->salsah_date,
+            'sequence_number' => $this->sequence_number,
         ];
     }
 
@@ -39,6 +44,13 @@ class ImageResource extends JsonApiResource
             $this->relation('keywords'),
             $this->relation('comments'),
             $this->relation('location'),
+            $this->relation('people'),
+            $this->relation('dates'),
+
+            $this->relation('verso'),
+            $this->relation('object_types'),
+            $this->relation('model_types'),
+            $this->relation('formats'),
         ];
     }
 

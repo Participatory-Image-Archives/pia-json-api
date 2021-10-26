@@ -3,6 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+
+use App\Models\ObjectType;
+use App\Models\ModelType;
+use App\Models\Format;
+use App\Models\Person;
+use App\Models\Date;
 use App\Models\Location;
 use App\Models\Keyword;
 use App\Models\Comment;
@@ -22,6 +28,7 @@ class Image extends Model
         'original_file_name',
         'salsah_date',
         'sequence_number',
+        
         'location_id',
         'collection',
         'verso',
@@ -30,9 +37,39 @@ class Image extends Model
         'format',
     ];
 
+    public function verso()
+    {
+        return $this->hasOne(Image::Class, 'verso_id');
+    }
+
+    public function object_type()
+    {
+        return $this->hasOne(ObjectType::Class);
+    }
+
+    public function model()
+    {
+        return $this->hasOne(ModelType::Class);
+    }
+
+    public function format()
+    {
+        return $this->hasOne(Format::Class);
+    }
+
     public function location()
     {
-        return $this->belongsTo(Location::Class);
+        return $this->hasOne(Location::Class);
+    }
+
+    public function dates()
+    {
+        return $this->belongsToMany(Date::Class);
+    }
+
+    public function people()
+    {
+        return $this->belongsToMany(Person::Class);
     }
 
     public function keywords()
