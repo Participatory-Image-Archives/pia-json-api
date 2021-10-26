@@ -30,13 +30,21 @@ JsonApiRoute::server('v1')
             $relationships->hasMany('dates');
             $relationships->hasMany('alt-labels');
         });
+
         $server->resource('images', JsonApiController::class)->relationships(function ($relationships) {
             $relationships->hasMany('collections');
             $relationships->hasMany('keywords');
             $relationships->hasMany('comments');
             $relationships->hasOne('location');
         });
-        $server->resource('albums', JsonApiController::class);
+
+        $server->resource('albums', JsonApiController::class)->relationships(function ($relationships) {
+            $relationships->hasMany('collections');
+            $relationships->hasMany('dates');
+            $relationships->hasOne('people');
+            $relationships->hasOne('images');
+            $relationships->hasMany('comments');
+        });
 
         $server->resource('keywords', JsonApiController::class)->relationships(function ($relationships) {
             $relationships->hasMany('alt-labels');
@@ -58,4 +66,26 @@ JsonApiRoute::server('v1')
         $server->resource('formats', JsonApiController::class);
         $server->resource('model-types', JsonApiController::class);
         $server->resource('object-types', JsonApiController::class);
+
+        $server->resource('maps', JsonApiController::class)->relationships(function ($relationships) {
+            $relationships->hasOne('map-keys');
+            $relationships->hasMany('map-layers');
+            $relationships->hasMany('linked-layers');
+            $relationships->hasMany('map-entries');
+        });
+        $server->resource('map-layers', JsonApiController::class)->relationships(function ($relationships) {
+            $relationships->hasOne('map');
+            $relationships->hasMany('map-entries');
+        });
+        $server->resource('map-entries', JsonApiController::class)->relationships(function ($relationships) {
+            $relationships->hasOne('map');
+            $relationships->hasOne('map-layer');
+            $relationships->hasOne('location');
+            $relationships->hasOne('image');
+            $relationships->hasMany('map-keys');
+        });
+        $server->resource('map-keys', JsonApiController::class)->relationships(function ($relationships) {
+            $relationships->hasOne('map');
+            $relationships->hasMany('map-entries');
+        });
     });

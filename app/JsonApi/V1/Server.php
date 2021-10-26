@@ -50,6 +50,11 @@ class Server extends BaseServer
             Formats\FormatSchema::class,
             ModelTypes\ModelTypeSchema::class,
             ObjectTypes\ObjectTypeSchema::class,
+
+            Maps\MapSchema::class,
+            MapLayers\MapLayerSchema::class,
+            MapEntries\MapEntrySchema::class,
+            MapKeys\MapKeySchema::class,
         ];
     }
 

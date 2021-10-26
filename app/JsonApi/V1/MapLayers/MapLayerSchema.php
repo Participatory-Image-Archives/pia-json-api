@@ -1,18 +1,19 @@
 <?php
 
-namespace App\JsonApi\V1\Albums;
+namespace App\JsonApi\V1\MapLayers;
 
-use App\Models\Album;
+use App\Models\MapLayer;
 use LaravelJsonApi\Eloquent\Contracts\Paginator;
 use LaravelJsonApi\Eloquent\Fields\DateTime;
 use LaravelJsonApi\Eloquent\Fields\ID;
 use LaravelJsonApi\Eloquent\Fields\Str;
-use LaravelJsonApi\Eloquent\Fields\Relations\BelongsToMany;
+use LaravelJsonApi\Eloquent\Fields\Relations\HasMany;
+use LaravelJsonApi\Eloquent\Fields\Relations\BelongsTo;
 use LaravelJsonApi\Eloquent\Filters\WhereIdIn;
 use LaravelJsonApi\Eloquent\Pagination\PagePagination;
 use LaravelJsonApi\Eloquent\Schema;
 
-class AlbumSchema extends Schema
+class MapLayerSchema extends Schema
 {
 
     /**
@@ -20,7 +21,7 @@ class AlbumSchema extends Schema
      *
      * @var string
      */
-    public static string $model = Album::class;
+    public static string $model = MapLayer::class;
 
     /**
      * Get the resource fields.
@@ -32,17 +33,10 @@ class AlbumSchema extends Schema
         return [
             ID::make(),
 
-            Str::make('salsah_id'),
-            Str::make('title'),
             Str::make('label'),
-            Str::make('signature'),
-            Str::make('description'),
-            
-            BelongsToMany::make('collections'),
-            BelongsToMany::make('dates'),
-            BelongsToMany::make('people'),
-            BelongsToMany::make('images'),
-            BelongsToMany::make('comments'),
+        
+            BelongsTo::make('map'),
+            HasMany::make('map-entries'),
 
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
