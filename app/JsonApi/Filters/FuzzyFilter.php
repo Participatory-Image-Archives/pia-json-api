@@ -66,7 +66,7 @@ class FuzzyFilter implements Filter
      */
     public function apply($query, $value)
     {
-        $terms = explode(',', $value);
+        $terms = explode(' ', $value);
 
         foreach($terms as $k => $term) {
             $query->where(

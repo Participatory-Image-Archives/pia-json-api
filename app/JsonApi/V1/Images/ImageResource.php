@@ -66,7 +66,7 @@ class ImageResource extends JsonApiResource
             $this->selfLink(),
             new Link(
                 'related',
-                'https://pia-iiif.dhlab.unibas.ch/'.$this->collections()->where('origin', 'salsah')->first()->label.'/'.$this->signature.'.jp2/info.json'
+                'https://pia-iiif.dhlab.unibas.ch/'.$this->collections()->where('origin', 'salsah')->first()->label.'/'.$this->signature.'.jp2/'
             ),
             new Link(
                 'manifest',
