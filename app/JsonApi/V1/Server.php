@@ -55,6 +55,8 @@ class Server extends BaseServer
             MapLayers\MapLayerSchema::class,
             MapEntries\MapEntrySchema::class,
             MapKeys\MapKeySchema::class,
+
+            PiaDocs\PiaDocSchema::class,
         ];
     }
 

@@ -88,4 +88,8 @@ JsonApiRoute::server('v1')
             $relationships->hasOne('map');
             $relationships->hasMany('map-entries');
         });
+
+        $server->resource('pia-docs', JsonApiController::class)->relationships(function ($relationships) {
+            $relationships->hasMany('collections');
+        });
     });
