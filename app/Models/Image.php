@@ -44,27 +44,27 @@ class Image extends Model
 
     public function objectType()
     {
-        return $this->hasOne(ObjectType::Class);
+        return $this->belongsTo(ObjectType::Class);
     }
 
     public function modelType()
     {
-        return $this->hasOne(ModelType::Class);
+        return $this->belongsTo(ModelType::Class);
     }
 
     public function format()
     {
-        return $this->hasOne(Format::Class);
+        return $this->belongsTo(Format::Class);
     }
 
     public function location()
     {
-        return $this->hasOne(Location::Class);
+        return $this->belongsTo(Location::Class);
     }
 
     public function dates()
     {
-        return $this->belongsToMany(Date::Class);
+        return $this->belongsToMany(Date::Class, 'image_date', 'image_id', 'date_id');
     }
 
     public function people()
