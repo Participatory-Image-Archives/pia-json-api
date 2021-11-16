@@ -47,6 +47,7 @@ JsonApiRoute::server('v1')
         });
 
         $server->resource('keywords', JsonApiController::class)->relationships(function ($relationships) {
+            $relationships->hasMany('images');
             $relationships->hasMany('alt-labels');
         });
         $server->resource('comments', JsonApiController::class)->relationships(function ($relationships) {

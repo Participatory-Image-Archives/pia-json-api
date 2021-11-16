@@ -33,7 +33,10 @@ class KeywordSchema extends Schema
             ID::make(),
             Str::make('label'),
             Str::make('description'),
+            
+            BelongsToMany::make('images'),
             BelongsToMany::make('alt-labels'),
+
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
         ];
