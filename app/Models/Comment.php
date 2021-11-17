@@ -16,11 +16,11 @@ class Comment extends Model
 
     public function images()
     {
-        return $this->belongsToMany(Image::Class, 'image_comment', 'image_id', 'comment_id');
+        return $this->belongsToMany(Image::Class, 'image_comment', 'comment_id', 'image_id');
     }
 
     public function collections()
     {
-        return $this->belongsToMany(Image::Class, 'collection_comment', 'collection_id', 'comment_id');
+        return $this->belongsToMany(Image::Class, 'collection_comment', 'comment_id', 'collection_id');
     }
 }
