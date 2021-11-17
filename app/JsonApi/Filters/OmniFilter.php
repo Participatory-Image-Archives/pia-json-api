@@ -8,7 +8,7 @@ use LaravelJsonApi\Eloquent\Contracts\Filter;
 use LaravelJsonApi\Eloquent\Filters\Concerns\DeserializesValue;
 use LaravelJsonApi\Eloquent\Filters\Concerns\IsSingular;
 
-class FuzzyFilter implements Filter
+class OmniFilter implements Filter
 {
     use DeserializesValue;
     use IsSingular;
@@ -70,9 +70,13 @@ class FuzzyFilter implements Filter
 
         foreach($terms as $k => $term) {
             $query->where(
-                DB::raw('lower('.$this->name.')'), 'like', '%' . strtolower($term) . '%'
+                DB::raw('lower(title)'), 'like', '%' . strtolower($term) . '%'
             );
         }
+
+        $query->orWhere(DB::raw('lower(signature)'), 'like', '%' . strtolower($value) . '%');
+        $query->orWhere(DB::raw('lower(oldnr)'), 'like', '%' . strtolower($value) . '%');
+        $query->orWhere(DB::raw('lower(sequence_number)'), 'like', '%' . strtolower($value) . '%');
 
         return $query;
     }

@@ -9,6 +9,8 @@ use LaravelJsonApi\Eloquent\Fields\ID;
 use LaravelJsonApi\Eloquent\Fields\Str;
 use LaravelJsonApi\Eloquent\Fields\Relations\BelongsToMany;
 use LaravelJsonApi\Eloquent\Filters\WhereIdIn;
+use LaravelJsonApi\Eloquent\Filters\Where;
+use App\JsonApi\Filters\FuzzyFilter;
 use LaravelJsonApi\Eloquent\Pagination\PagePagination;
 use LaravelJsonApi\Eloquent\Schema;
 
@@ -50,6 +52,7 @@ class CommentSchema extends Schema
     {
         return [
             WhereIdIn::make($this),
+            FuzzyFilter::make('comment'),
         ];
     }
 

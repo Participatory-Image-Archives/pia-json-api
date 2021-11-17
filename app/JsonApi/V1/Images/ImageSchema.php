@@ -11,7 +11,9 @@ use LaravelJsonApi\Eloquent\Fields\Relations\BelongsToMany;
 use LaravelJsonApi\Eloquent\Fields\Relations\BelongsTo;
 use LaravelJsonApi\Eloquent\Fields\Relations\HasOne;
 use LaravelJsonApi\Eloquent\Filters\WhereIdIn;
+use App\JsonApi\Filters\OmniFilter;
 use App\JsonApi\Filters\FuzzyFilter;
+use LaravelJsonApi\Eloquent\Filters\Where;
 use LaravelJsonApi\Eloquent\Pagination\PagePagination;
 use LaravelJsonApi\Eloquent\Schema;
 
@@ -61,7 +63,11 @@ class ImageSchema extends Schema
     {
         return [
             WhereIdIn::make($this),
-            FuzzyFilter::make('title')
+            OmniFilter::make('omni'),
+            FuzzyFilter::make('title'),
+            FuzzyFilter::make('salsah_id'),
+            FuzzyFilter::make('oldnr'),
+            FuzzyFilter::make('signature')
         ];
     }
 
