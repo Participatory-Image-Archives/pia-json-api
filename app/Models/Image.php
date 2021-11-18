@@ -24,8 +24,6 @@ class Image extends Model
         'signature',
         'title',
         'original_title',
-        'file_name',
-        'original_file_name',
         'base_path',
         'salsah_date',
         'sequence_number',

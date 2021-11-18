@@ -24,8 +24,6 @@ class ImageResource extends JsonApiResource
             'signature' => $this->signature,
             'title' => $this->title,
             'original_title' => $this->original_title,
-            'file_name' => $this->file_name,
-            'original_file_name' => $this->original_file_name,
             'base_path' => $this->base_path,
             'salsah_date' => $this->salsah_date,
             'sequence_number' => $this->sequence_number,
@@ -67,7 +65,7 @@ class ImageResource extends JsonApiResource
             $this->selfLink(),
             new Link(
                 'related',
-                'https://pia-iiif.dhlab.unibas.ch/'.$this->collections()->where('origin', 'salsah')->first()->label.'/'.$this->signature.'.jp2/'
+                'https://pia-iiif.dhlab.unibas.ch/'.$this->base_path.'/'.$this->signature.'.jp2/'
             ),
             new Link(
                 'manifest',
