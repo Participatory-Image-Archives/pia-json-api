@@ -26,6 +26,7 @@ class ImageResource extends JsonApiResource
             'original_title' => $this->original_title,
             'file_name' => $this->file_name,
             'original_file_name' => $this->original_file_name,
+            'base_path' => $this->base_path,
             'salsah_date' => $this->salsah_date,
             'sequence_number' => $this->sequence_number,
         ];
