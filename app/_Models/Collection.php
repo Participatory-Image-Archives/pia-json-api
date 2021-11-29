@@ -58,4 +58,14 @@ class Collection extends Model
     {
         return $this->images()->allRelatedIds();
     }
+
+    public function docs()
+    {
+        return $this->belongsToMany(PiaDoc::Class, 'pia_doc_collection', 'collection_id', 'pia_doc_id');
+    }
+
+    public function maps()
+    {
+        return $this->belongsToMany(Map::Class, 'map_collection', 'collection_id', 'map_id');
+    }
 }

@@ -61,7 +61,9 @@ JsonApiRoute::server('v1')
 
         $server->resource('literatures', JsonApiController::class);
         $server->resource('jobs', JsonApiController::class);
-        $server->resource('people', JsonApiController::class);
+        $server->resource('people', JsonApiController::class)->relationships(function ($relationships) {
+            $relationships->hasMany('images');
+        });
 
         $server->resource('dates', JsonApiController::class);
         $server->resource('formats', JsonApiController::class);
