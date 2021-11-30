@@ -38,6 +38,7 @@ class MapSchema extends Schema
             Str::make('label'),
             Str::make('description'),
             Number::make('tiles'),
+            Str::make('origin'),
         
             HasMany::make('map-keys'),
             HasMany::make('map-layers'),
