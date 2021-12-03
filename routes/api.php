@@ -56,7 +56,9 @@ JsonApiRoute::server('v1')
         });
         $server->resource('alt-labels', JsonApiController::class);
 
-        $server->resource('locations', JsonApiController::class);
+        $server->resource('locations', JsonApiController::class)->relationships(function ($relationships) {
+            $relationships->hasMany('images');
+        });
         $server->resource('places', JsonApiController::class);
 
         $server->resource('literatures', JsonApiController::class);
