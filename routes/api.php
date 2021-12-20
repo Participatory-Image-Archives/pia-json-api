@@ -67,10 +67,19 @@ JsonApiRoute::server('v1')
             $relationships->hasMany('images');
         });
 
-        $server->resource('dates', JsonApiController::class);
-        $server->resource('formats', JsonApiController::class);
-        $server->resource('model-types', JsonApiController::class);
-        $server->resource('object-types', JsonApiController::class);
+        $server->resource('dates', JsonApiController::class)->relationships(function ($relationships) {
+            $relationships->hasMany('images');
+        });
+
+        $server->resource('formats', JsonApiController::class)->relationships(function ($relationships) {
+            $relationships->hasMany('images');
+        });
+        $server->resource('model-types', JsonApiController::class)->relationships(function ($relationships) {
+            $relationships->hasMany('images');
+        });
+        $server->resource('object-types', JsonApiController::class)->relationships(function ($relationships) {
+            $relationships->hasMany('images');
+        });
 
         $server->resource('maps', JsonApiController::class)->relationships(function ($relationships) {
             $relationships->hasOne('map-keys');

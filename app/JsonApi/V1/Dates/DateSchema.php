@@ -8,7 +8,9 @@ use LaravelJsonApi\Eloquent\Fields\DateTime;
 use LaravelJsonApi\Eloquent\Fields\ID;
 use LaravelJsonApi\Eloquent\Fields\Str;
 use LaravelJsonApi\Eloquent\Fields\Number;
+use LaravelJsonApi\Eloquent\Fields\Relations\BelongsToMany;
 use LaravelJsonApi\Eloquent\Filters\WhereIdIn;
+use App\JsonApi\Filters\DatesFilter;
 use LaravelJsonApi\Eloquent\Pagination\PagePagination;
 use LaravelJsonApi\Eloquent\Schema;
 
@@ -34,6 +36,9 @@ class DateSchema extends Schema
             DateTime::make('date'),
             Str::make('date_string'),
             Number::Make('type'),
+            
+            BelongsToMany::make('images'),
+
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
         ];
@@ -48,6 +53,7 @@ class DateSchema extends Schema
     {
         return [
             WhereIdIn::make($this),
+            DatesFilter::make('dates'),
         ];
     }
 

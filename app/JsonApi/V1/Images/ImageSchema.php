@@ -67,7 +67,7 @@ class ImageSchema extends Schema
             FuzzyFilter::make('title'),
             FuzzyFilter::make('salsah_id'),
             FuzzyFilter::make('oldnr'),
-            FuzzyFilter::make('signature')
+            FuzzyFilter::make('signature'),
         ];
     }
 
