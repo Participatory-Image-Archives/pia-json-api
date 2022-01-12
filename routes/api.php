@@ -24,6 +24,7 @@ JsonApiRoute::server('v1')
     ->resources(function ($server) {
         $server->resource('collections', JsonApiController::class)->relationships(function ($relationships) {
             $relationships->hasMany('images');
+            $relationships->hasMany('documents');
             $relationships->hasMany('comments');
             $relationships->hasMany('people');
             $relationships->hasMany('literatures');
@@ -33,6 +34,7 @@ JsonApiRoute::server('v1')
 
         $server->resource('images', JsonApiController::class)->relationships(function ($relationships) {
             $relationships->hasMany('collections');
+            $relationships->hasMany('documents');
             $relationships->hasMany('keywords');
             $relationships->hasMany('comments');
             $relationships->hasOne('location');
@@ -44,6 +46,11 @@ JsonApiRoute::server('v1')
             $relationships->hasOne('people');
             $relationships->hasOne('images');
             $relationships->hasMany('comments');
+        });
+
+        $server->resource('documents', JsonApiController::class)->relationships(function ($relationships) {
+            $relationships->hasMany('images');
+            $relationships->hasMany('collections');
         });
 
         $server->resource('keywords', JsonApiController::class)->relationships(function ($relationships) {

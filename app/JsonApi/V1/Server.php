@@ -35,6 +35,7 @@ class Server extends BaseServer
             Collections\CollectionSchema::class,
             Albums\AlbumSchema::class,
             Images\ImageSchema::class,
+            Documents\DocumentSchema::class,
             Keywords\KeywordSchema::class,
             Comments\CommentSchema::class,
             AltLabels\AltLabelSchema::class,

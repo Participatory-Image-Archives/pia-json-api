@@ -1,23 +1,18 @@
 <?php
 
-namespace App\JsonApi\V1\Images;
+namespace App\JsonApi\V1\Documents;
 
-use App\Models\Image;
+use App\Models\Document;
 use LaravelJsonApi\Eloquent\Contracts\Paginator;
 use LaravelJsonApi\Eloquent\Fields\DateTime;
 use LaravelJsonApi\Eloquent\Fields\ID;
 use LaravelJsonApi\Eloquent\Fields\Str;
 use LaravelJsonApi\Eloquent\Fields\Relations\BelongsToMany;
-use LaravelJsonApi\Eloquent\Fields\Relations\BelongsTo;
-use LaravelJsonApi\Eloquent\Fields\Relations\HasOne;
 use LaravelJsonApi\Eloquent\Filters\WhereIdIn;
-use App\JsonApi\Filters\OmniFilter;
-use App\JsonApi\Filters\FuzzyFilter;
-use LaravelJsonApi\Eloquent\Filters\Where;
 use LaravelJsonApi\Eloquent\Pagination\PagePagination;
 use LaravelJsonApi\Eloquent\Schema;
 
-class ImageSchema extends Schema
+class DocumentSchema extends Schema
 {
 
     /**
@@ -25,7 +20,7 @@ class ImageSchema extends Schema
      *
      * @var string
      */
-    public static string $model = Image::class;
+    public static string $model = Document::class;
 
     /**
      * Get the resource fields.
@@ -37,18 +32,13 @@ class ImageSchema extends Schema
         return [
             ID::make(),
 
-            HasOne::make('location'),
-            HasOne::make('verso'),
-            
-            BelongsTo::make('object-type'),
-            BelongsTo::make('model-type'),
-            BelongsTo::make('format'),
+            Str::make('label'),
+            Str::make('file_name'),
+            Str::make('original_file_name'),
+            Str::make('base_path'),
 
-            BelongsToMany::make('keywords'),
+            BelongsToMany::make('images'),
             BelongsToMany::make('collections'),
-            BelongsToMany::make('comments'),
-            BelongsToMany::make('dates'),
-            BelongsToMany::make('documents'),
 
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
@@ -64,11 +54,6 @@ class ImageSchema extends Schema
     {
         return [
             WhereIdIn::make($this),
-            OmniFilter::make('omni'),
-            FuzzyFilter::make('title'),
-            FuzzyFilter::make('salsah_id'),
-            FuzzyFilter::make('oldnr'),
-            FuzzyFilter::make('signature'),
         ];
     }
 

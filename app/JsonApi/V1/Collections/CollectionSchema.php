@@ -49,6 +49,7 @@ class CollectionSchema extends Schema
             BelongsToMany::make('literatures'),
             BelongsToMany::make('dates'),
             BelongsToMany::make('alt-labels'),
+            BelongsToMany::make('documents'),
 
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
