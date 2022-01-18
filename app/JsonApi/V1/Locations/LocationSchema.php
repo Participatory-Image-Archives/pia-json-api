@@ -9,6 +9,7 @@ use LaravelJsonApi\Eloquent\Fields\ID;
 use LaravelJsonApi\Eloquent\Fields\Str;
 use LaravelJsonApi\Eloquent\Fields\Number;
 use LaravelJsonApi\Eloquent\Filters\WhereIdIn;
+use App\JsonApi\Filters\CoordinatesFilter;
 use LaravelJsonApi\Eloquent\Fields\Relations\BelongsToMany;
 use LaravelJsonApi\Eloquent\Pagination\PagePagination;
 use LaravelJsonApi\Eloquent\Schema;
@@ -35,6 +36,7 @@ class LocationSchema extends Schema
             Str::make('label'),
             Str::make('geonames_id'),
             Str::make('geonames_url'),
+            
             Number::make('latitude'),
             Number::make('longitude'),
 
@@ -54,6 +56,7 @@ class LocationSchema extends Schema
     {
         return [
             WhereIdIn::make($this),
+            CoordinatesFilter::make('coordinates'),
         ];
     }
 
