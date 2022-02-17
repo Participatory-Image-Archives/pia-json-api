@@ -69,7 +69,7 @@ class DatesFilter implements Filter
         $dates = explode(',', $value);
 
         $query->whereBetween('date', $dates);
-        $query->whereBetween('end_date', $dates);
+        $query->orWhereNotNull('end_date')->whereBetween('end_date', $dates);
 
         return $query;
     }
