@@ -34,7 +34,9 @@ class DateSchema extends Schema
         return [
             ID::make(),
             DateTime::make('date'),
+            DateTime::make('end_date'),
             Str::make('date_string'),
+            Number::Make('accuracy'),
             Number::Make('type'),
             
             BelongsToMany::make('images'),

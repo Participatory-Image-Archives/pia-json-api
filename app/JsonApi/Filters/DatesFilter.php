@@ -68,12 +68,8 @@ class DatesFilter implements Filter
     {
         $dates = explode(',', $value);
 
-        if($dates[1] != '') {
-            $query->whereDate('date', '>=', $dates[0]);
-            $query->whereDate('date', '<=', $dates[1]);
-        } else {
-            $query->whereDate('date', $dates[0]);
-        }
+        $query->whereBetween('date', $dates);
+        $query->whereBetween('end_date', $dates);
 
         return $query;
     }
