@@ -36,6 +36,7 @@ JsonApiRoute::server('v1')
             $relationships->hasMany('collections');
             $relationships->hasMany('documents');
             $relationships->hasMany('keywords');
+            $relationships->hasMany('people');
             $relationships->hasMany('comments');
             $relationships->hasOne('location');
         });
