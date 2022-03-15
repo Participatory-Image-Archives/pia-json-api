@@ -45,6 +45,7 @@ class ImageSchema extends Schema
             BelongsTo::make('format'),
 
             BelongsToMany::make('keywords'),
+            BelongsToMany::make('people'),
             BelongsToMany::make('collections'),
             BelongsToMany::make('comments'),
             BelongsToMany::make('dates'),
