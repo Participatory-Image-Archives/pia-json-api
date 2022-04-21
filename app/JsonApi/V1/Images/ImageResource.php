@@ -69,7 +69,7 @@ class ImageResource extends JsonApiResource
             ),
             new Link(
                 'manifest',
-                'https://pia-iiif.dhlab.unibas.ch/<object>/<id>/manifest.json'
+                'https://iiif.participatory-archives.ch/'.$this->id.'/manifest.json'
             ),
         );
     }
