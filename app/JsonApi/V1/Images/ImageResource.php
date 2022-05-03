@@ -65,11 +65,11 @@ class ImageResource extends JsonApiResource
             $this->selfLink(),
             new Link(
                 'related',
-                'https://pia-iiif.dhlab.unibas.ch/'.$this->base_path.'/'.$this->signature.'.jp2/'
+                'https://sipi.participatory-archives.ch/'.$this->base_path.'/'.$this->signature.'.jp2/'
             ),
             new Link(
                 'manifest',
-                'https://iiif.participatory-archives.ch/'.$this->id.'/manifest.json'
+                'https://sipi.participatory-archives.ch/'.$this->id.'/manifest.json'
             ),
         );
     }
