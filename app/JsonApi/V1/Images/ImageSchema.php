@@ -44,11 +44,13 @@ class ImageSchema extends Schema
             BelongsTo::make('model-type'),
             BelongsTo::make('format'),
 
+            BelongsTo::make('date'),
+            BelongsTo::make('place'),
+
             BelongsToMany::make('keywords'),
             BelongsToMany::make('people'),
             BelongsToMany::make('collections'),
             BelongsToMany::make('comments'),
-            BelongsToMany::make('dates'),
             BelongsToMany::make('documents'),
 
             DateTime::make('createdAt')->sortable()->readOnly(),

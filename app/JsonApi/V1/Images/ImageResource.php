@@ -42,9 +42,10 @@ class ImageResource extends JsonApiResource
             $this->relation('collections'),
             $this->relation('keywords'),
             $this->relation('comments'),
-            $this->relation('location'),
             $this->relation('people'),
-            $this->relation('dates'),
+
+            $this->relation('date'),
+            $this->relation('place'),
 
             $this->relation('verso'),
             $this->relation('object_types'),

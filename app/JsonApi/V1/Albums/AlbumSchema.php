@@ -37,9 +37,10 @@ class AlbumSchema extends Schema
             Str::make('label'),
             Str::make('signature'),
             Str::make('description'),
+
+            BelongsToMany::make('date'),
             
             BelongsToMany::make('collections'),
-            BelongsToMany::make('dates'),
             BelongsToMany::make('people'),
             BelongsToMany::make('images'),
             BelongsToMany::make('comments'),

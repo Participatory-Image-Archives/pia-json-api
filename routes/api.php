@@ -38,12 +38,14 @@ JsonApiRoute::server('v1')
             $relationships->hasMany('keywords');
             $relationships->hasMany('people');
             $relationships->hasMany('comments');
-            $relationships->hasOne('location');
+
+            $relationships->hasOne('date');
+            $relationships->hasOne('place');
         });
 
         $server->resource('albums', JsonApiController::class)->relationships(function ($relationships) {
             $relationships->hasMany('collections');
-            $relationships->hasMany('dates');
+            $relationships->hasMany('date');
             $relationships->hasOne('people');
             $relationships->hasOne('images');
             $relationships->hasMany('comments');
@@ -64,10 +66,9 @@ JsonApiRoute::server('v1')
         });
         $server->resource('alt-labels', JsonApiController::class);
 
-        $server->resource('locations', JsonApiController::class)->relationships(function ($relationships) {
+        $server->resource('places', JsonApiController::class)->relationships(function ($relationships) {
             $relationships->hasMany('images');
         });
-        $server->resource('places', JsonApiController::class);
 
         $server->resource('literatures', JsonApiController::class);
         $server->resource('jobs', JsonApiController::class);
