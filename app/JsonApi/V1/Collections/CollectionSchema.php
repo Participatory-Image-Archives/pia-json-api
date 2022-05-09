@@ -8,6 +8,7 @@ use LaravelJsonApi\Eloquent\Fields\DateTime;
 use LaravelJsonApi\Eloquent\Fields\ID;
 use LaravelJsonApi\Eloquent\Fields\Str;
 use LaravelJsonApi\Eloquent\Fields\Number;
+use LaravelJsonApi\Eloquent\Fields\Relations\BelongsTo;
 use LaravelJsonApi\Eloquent\Fields\Relations\BelongsToMany;
 use LaravelJsonApi\Eloquent\Filters\WhereIdIn;
 use LaravelJsonApi\Eloquent\Filters\Where;
@@ -43,11 +44,12 @@ class CollectionSchema extends Schema
             Str::make('embedded_video'),
             Str::make('origin'),
 
+            BelongsTo::make('date'),
+
             BelongsToMany::make('images'),
             BelongsToMany::make('comments'),
             BelongsToMany::make('people'),
             BelongsToMany::make('literatures'),
-            BelongsToMany::make('dates'),
             BelongsToMany::make('alt-labels'),
             BelongsToMany::make('documents'),
 

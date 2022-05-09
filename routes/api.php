@@ -28,7 +28,7 @@ JsonApiRoute::server('v1')
             $relationships->hasMany('comments');
             $relationships->hasMany('people');
             $relationships->hasMany('literatures');
-            $relationships->hasMany('dates');
+            $relationships->hasMany('date');
             $relationships->hasMany('alt-labels');
         });
 
