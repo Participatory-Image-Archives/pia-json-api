@@ -32,6 +32,21 @@ class PlaceSchema extends Schema
         return [
             ID::make(),
 
+            Str::make('label'),
+            Str::make('origin'),
+
+            Str::make('geonames_id'),
+            Str::make('geonames_url'),
+            Str::make('geonames_code'),
+            Str::make('geonames_code_name'),
+            Str::make('geonames_division_level'),
+
+            Str::make('wiki_uri'),
+
+            Str::make('geometry'),
+            Number::make('latitude'),
+            Number::make('longitude'),
+
             Str::make('asv_id'),
             Str::make('label'),
 
