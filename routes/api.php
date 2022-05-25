@@ -106,6 +106,7 @@ JsonApiRoute::server('v1')
             $relationships->hasOne('location');
             $relationships->hasOne('image');
             $relationships->hasMany('map-keys');
+            $relationships->hasMany('documents');
         });
         $server->resource('map-keys', JsonApiController::class)->relationships(function ($relationships) {
             $relationships->hasOne('map');

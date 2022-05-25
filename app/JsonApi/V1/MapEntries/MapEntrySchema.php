@@ -42,7 +42,9 @@ class MapEntrySchema extends Schema
             BelongsTo::make('map-layer'),
             BelongsTo::make('location'),
             BelongsTo::make('image'),
+
             BelongsToMany::make('map-keys'),
+            BelongsToMany::make('documents'),
 
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
