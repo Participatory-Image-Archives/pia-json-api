@@ -30,6 +30,7 @@ JsonApiRoute::server('v1')
             $relationships->hasMany('literatures');
             $relationships->hasMany('date');
             $relationships->hasMany('alt-labels');
+            $relationships->hasMany('keywords');
         });
 
         $server->resource('images', JsonApiController::class)->relationships(function ($relationships) {
@@ -57,6 +58,7 @@ JsonApiRoute::server('v1')
         });
 
         $server->resource('keywords', JsonApiController::class)->relationships(function ($relationships) {
+            $relationships->hasMany('collections');
             $relationships->hasMany('images');
             $relationships->hasMany('alt-labels');
         });

@@ -34,6 +34,7 @@ class KeywordSchema extends Schema
             Str::make('label'),
             Str::make('description'),
             
+            BelongsToMany::make('collections'),
             BelongsToMany::make('images'),
             BelongsToMany::make('alt-labels'),
 
