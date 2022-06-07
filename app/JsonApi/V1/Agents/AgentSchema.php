@@ -1,23 +1,18 @@
 <?php
 
-namespace App\JsonApi\V1\Images;
+namespace App\JsonApi\V1\Agents;
 
-use App\Models\Image;
+use App\Models\Agent;
 use LaravelJsonApi\Eloquent\Contracts\Paginator;
 use LaravelJsonApi\Eloquent\Fields\DateTime;
 use LaravelJsonApi\Eloquent\Fields\ID;
 use LaravelJsonApi\Eloquent\Fields\Str;
 use LaravelJsonApi\Eloquent\Fields\Relations\BelongsToMany;
-use LaravelJsonApi\Eloquent\Fields\Relations\BelongsTo;
-use LaravelJsonApi\Eloquent\Fields\Relations\HasOne;
 use LaravelJsonApi\Eloquent\Filters\WhereIdIn;
-use App\JsonApi\Filters\OmniFilter;
-use App\JsonApi\Filters\FuzzyFilter;
-use LaravelJsonApi\Eloquent\Filters\Where;
 use LaravelJsonApi\Eloquent\Pagination\PagePagination;
 use LaravelJsonApi\Eloquent\Schema;
 
-class ImageSchema extends Schema
+class AgentSchema extends Schema
 {
 
     /**
@@ -25,7 +20,7 @@ class ImageSchema extends Schema
      *
      * @var string
      */
-    public static string $model = Image::class;
+    public static string $model = Agent::class;
 
     /**
      * Get the resource fields.
@@ -37,21 +32,14 @@ class ImageSchema extends Schema
         return [
             ID::make(),
 
-            HasOne::make('location'),
-            HasOne::make('verso'),
-            
-            BelongsTo::make('object-type'),
-            BelongsTo::make('model-type'),
-            BelongsTo::make('format'),
+            Str::make('name'),
+            Str::make('title'),
+            Str::make('family'),
+            Str::make('description'),
 
-            BelongsTo::make('date'),
-            BelongsTo::make('place'),
-
-            BelongsToMany::make('keywords'),
-            BelongsToMany::make('agents'),
+            BelongsToMany::make('images'),
             BelongsToMany::make('collections'),
-            BelongsToMany::make('comments'),
-            BelongsToMany::make('documents'),
+            BelongsToMany::make('albums'),
 
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
@@ -67,11 +55,6 @@ class ImageSchema extends Schema
     {
         return [
             WhereIdIn::make($this),
-            OmniFilter::make('omni'),
-            FuzzyFilter::make('title'),
-            FuzzyFilter::make('salsah_id'),
-            FuzzyFilter::make('oldnr'),
-            FuzzyFilter::make('signature'),
         ];
     }
 

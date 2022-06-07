@@ -40,7 +40,7 @@ class MapEntrySchema extends Schema
         
             BelongsTo::make('map'),
             BelongsTo::make('map-layer'),
-            BelongsTo::make('location'),
+            BelongsTo::make('place'),
             BelongsTo::make('image'),
 
             BelongsToMany::make('map-keys'),

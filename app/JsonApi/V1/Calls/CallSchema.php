@@ -1,23 +1,20 @@
 <?php
 
-namespace App\JsonApi\V1\Images;
+namespace App\JsonApi\V1\Calls;
 
-use App\Models\Image;
+use App\Models\Call;
 use LaravelJsonApi\Eloquent\Contracts\Paginator;
 use LaravelJsonApi\Eloquent\Fields\DateTime;
 use LaravelJsonApi\Eloquent\Fields\ID;
 use LaravelJsonApi\Eloquent\Fields\Str;
-use LaravelJsonApi\Eloquent\Fields\Relations\BelongsToMany;
+use LaravelJsonApi\Eloquent\Fields\Relations\HasMany;
 use LaravelJsonApi\Eloquent\Fields\Relations\BelongsTo;
-use LaravelJsonApi\Eloquent\Fields\Relations\HasOne;
+use LaravelJsonApi\Eloquent\Fields\Relations\BelongsToMany;
 use LaravelJsonApi\Eloquent\Filters\WhereIdIn;
-use App\JsonApi\Filters\OmniFilter;
-use App\JsonApi\Filters\FuzzyFilter;
-use LaravelJsonApi\Eloquent\Filters\Where;
 use LaravelJsonApi\Eloquent\Pagination\PagePagination;
 use LaravelJsonApi\Eloquent\Schema;
 
-class ImageSchema extends Schema
+class CallSchema extends Schema
 {
 
     /**
@@ -25,7 +22,7 @@ class ImageSchema extends Schema
      *
      * @var string
      */
-    public static string $model = Image::class;
+    public static string $model = Call::class;
 
     /**
      * Get the resource fields.
@@ -37,21 +34,16 @@ class ImageSchema extends Schema
         return [
             ID::make(),
 
-            HasOne::make('location'),
-            HasOne::make('verso'),
-            
-            BelongsTo::make('object-type'),
-            BelongsTo::make('model-type'),
-            BelongsTo::make('format'),
+            Str::make('label'),
+            Str::make('description'),
+            Str::make('creator'),
 
-            BelongsTo::make('date'),
-            BelongsTo::make('place'),
+            DateTime::make('start_date'),
+            DateTime::make('end_date'),
 
+            BelongsTo::make('collection'),
             BelongsToMany::make('keywords'),
-            BelongsToMany::make('agents'),
-            BelongsToMany::make('collections'),
-            BelongsToMany::make('comments'),
-            BelongsToMany::make('documents'),
+            HasMany::make('call-entries'),
 
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
@@ -67,11 +59,6 @@ class ImageSchema extends Schema
     {
         return [
             WhereIdIn::make($this),
-            OmniFilter::make('omni'),
-            FuzzyFilter::make('title'),
-            FuzzyFilter::make('salsah_id'),
-            FuzzyFilter::make('oldnr'),
-            FuzzyFilter::make('signature'),
         ];
     }
 

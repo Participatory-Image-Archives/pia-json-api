@@ -41,7 +41,7 @@ class AlbumSchema extends Schema
             BelongsToMany::make('date'),
             
             BelongsToMany::make('collections'),
-            BelongsToMany::make('people'),
+            BelongsToMany::make('agents'),
             BelongsToMany::make('images'),
             BelongsToMany::make('comments'),
 

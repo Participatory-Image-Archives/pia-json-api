@@ -1,20 +1,18 @@
 <?php
 
-namespace App\JsonApi\V1\Locations;
+namespace App\JsonApi\V1\CallEntries;
 
-use App\Models\Location;
+use App\Models\CallEntry;
 use LaravelJsonApi\Eloquent\Contracts\Paginator;
 use LaravelJsonApi\Eloquent\Fields\DateTime;
 use LaravelJsonApi\Eloquent\Fields\ID;
 use LaravelJsonApi\Eloquent\Fields\Str;
-use LaravelJsonApi\Eloquent\Fields\Number;
+use LaravelJsonApi\Eloquent\Fields\Relations\BelongsTo;
 use LaravelJsonApi\Eloquent\Filters\WhereIdIn;
-use App\JsonApi\Filters\CoordinatesFilter;
-use LaravelJsonApi\Eloquent\Fields\Relations\BelongsToMany;
 use LaravelJsonApi\Eloquent\Pagination\PagePagination;
 use LaravelJsonApi\Eloquent\Schema;
 
-class LocationSchema extends Schema
+class CallEntrySchema extends Schema
 {
 
     /**
@@ -22,7 +20,7 @@ class LocationSchema extends Schema
      *
      * @var string
      */
-    public static string $model = Location::class;
+    public static string $model = CallEntry::class;
 
     /**
      * Get the resource fields.
@@ -33,14 +31,12 @@ class LocationSchema extends Schema
     {
         return [
             ID::make(),
-            Str::make('label'),
-            Str::make('geonames_id'),
-            Str::make('geonames_url'),
-            
-            Number::make('latitude'),
-            Number::make('longitude'),
 
-            BelongsToMany::make('images'),
+            Str::make('label'),
+            Str::make('comment'),
+            Str::make('creator'),
+
+            BelongsTo::make('calls'),
 
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
@@ -56,7 +52,6 @@ class LocationSchema extends Schema
     {
         return [
             WhereIdIn::make($this),
-            CoordinatesFilter::make('coordinates'),
         ];
     }
 

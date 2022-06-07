@@ -22,23 +22,31 @@ use LaravelJsonApi\Laravel\Http\Controllers\JsonApiController;
 JsonApiRoute::server('v1')
     ->prefix('v1')
     ->resources(function ($server) {
+
+        /**
+         * Object Schemas
+         */
         $server->resource('collections', JsonApiController::class)->relationships(function ($relationships) {
             $relationships->hasMany('images');
             $relationships->hasMany('documents');
             $relationships->hasMany('comments');
-            $relationships->hasMany('people');
             $relationships->hasMany('literatures');
-            $relationships->hasMany('date');
             $relationships->hasMany('alt-labels');
             $relationships->hasMany('keywords');
+            $relationships->hasMany('agents');
+
+            $relationships->hasMany('maps');
+            $relationships->hasMany('notes');
+
+            $relationships->hasOne('date');
         });
 
         $server->resource('images', JsonApiController::class)->relationships(function ($relationships) {
             $relationships->hasMany('collections');
             $relationships->hasMany('documents');
             $relationships->hasMany('keywords');
-            $relationships->hasMany('people');
             $relationships->hasMany('comments');
+            $relationships->hasMany('agents');
 
             $relationships->hasOne('date');
             $relationships->hasOne('place');
@@ -47,9 +55,9 @@ JsonApiRoute::server('v1')
         $server->resource('albums', JsonApiController::class)->relationships(function ($relationships) {
             $relationships->hasMany('collections');
             $relationships->hasMany('date');
-            $relationships->hasOne('people');
-            $relationships->hasOne('images');
+            $relationships->hasMany('images');
             $relationships->hasMany('comments');
+            $relationships->hasMany('agents');
         });
 
         $server->resource('documents', JsonApiController::class)->relationships(function ($relationships) {
@@ -66,17 +74,37 @@ JsonApiRoute::server('v1')
             $relationships->hasMany('collections');
             $relationships->hasMany('images');
         });
+
         $server->resource('alt-labels', JsonApiController::class);
+
+        /**
+         * Calls
+         */
+        $server->resource('calls', JsonApiController::class)->relationships(function ($relationships) {
+            $relationships->hasMany('call-entries');
+            $relationships->hasMany('keywords');
+            $relationships->hasOne('collection');
+        });
+
+        $server->resource('call-entries', JsonApiController::class)->relationships(function ($relationships) {
+            $relationships->hasOne('calls');
+        });
+
+        /*
+         * Metadata Schemas
+         */
+        $server->resource('agents', JsonApiController::class)->relationships(function ($relationships) {
+            $relationships->hasMany('images');
+            $relationships->hasMany('collections');
+        });
 
         $server->resource('places', JsonApiController::class)->relationships(function ($relationships) {
             $relationships->hasMany('images');
         });
 
         $server->resource('literatures', JsonApiController::class);
+
         $server->resource('jobs', JsonApiController::class);
-        $server->resource('people', JsonApiController::class)->relationships(function ($relationships) {
-            $relationships->hasMany('images');
-        });
 
         $server->resource('dates', JsonApiController::class)->relationships(function ($relationships) {
             $relationships->hasMany('images');
@@ -85,37 +113,44 @@ JsonApiRoute::server('v1')
         $server->resource('formats', JsonApiController::class)->relationships(function ($relationships) {
             $relationships->hasMany('images');
         });
+
         $server->resource('model-types', JsonApiController::class)->relationships(function ($relationships) {
             $relationships->hasMany('images');
         });
+
         $server->resource('object-types', JsonApiController::class)->relationships(function ($relationships) {
             $relationships->hasMany('images');
         });
 
+        /**
+         * Mapping Schemas
+         */
         $server->resource('maps', JsonApiController::class)->relationships(function ($relationships) {
             $relationships->hasOne('map-keys');
             $relationships->hasMany('map-layers');
             $relationships->hasMany('linked-layers');
             $relationships->hasMany('map-entries');
         });
+
         $server->resource('map-layers', JsonApiController::class)->relationships(function ($relationships) {
             $relationships->hasOne('map');
             $relationships->hasMany('map-entries');
         });
+
         $server->resource('map-entries', JsonApiController::class)->relationships(function ($relationships) {
-            $relationships->hasOne('map');
-            $relationships->hasOne('map-layer');
-            $relationships->hasOne('location');
-            $relationships->hasOne('image');
             $relationships->hasMany('map-keys');
             $relationships->hasMany('documents');
-        });
-        $server->resource('map-keys', JsonApiController::class)->relationships(function ($relationships) {
+
             $relationships->hasOne('map');
-            $relationships->hasMany('map-entries');
+            $relationships->hasOne('map-layer');
+            $relationships->hasOne('place');
+            $relationships->hasOne('image');
         });
 
-        $server->resource('pia-docs', JsonApiController::class)->relationships(function ($relationships) {
-            $relationships->hasMany('collections');
+        $server->resource('map-keys', JsonApiController::class)->relationships(function ($relationships) {
+            $relationships->hasMany('map-entries');
+
+            $relationships->hasOne('map');
         });
+
     });

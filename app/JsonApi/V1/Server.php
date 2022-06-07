@@ -36,14 +36,17 @@ class Server extends BaseServer
             Albums\AlbumSchema::class,
             Images\ImageSchema::class,
             Documents\DocumentSchema::class,
+            Notes\NoteSchema::class,
+
+            Calls\CallSchema::class,
+            CallEntries\CallEntrySchema::class,
+
             Keywords\KeywordSchema::class,
             Comments\CommentSchema::class,
             AltLabels\AltLabelSchema::class,
             
-            Locations\LocationSchema::class,
             Places\PlaceSchema::class,
-
-            People\PersonSchema::class,
+            Agents\AgentSchema::class,
             Jobs\JobSchema::class,
             Literatures\LiteratureSchema::class,
 
@@ -56,8 +59,6 @@ class Server extends BaseServer
             MapLayers\MapLayerSchema::class,
             MapEntries\MapEntrySchema::class,
             MapKeys\MapKeySchema::class,
-
-            PiaDocs\PiaDocSchema::class,
         ];
     }
 

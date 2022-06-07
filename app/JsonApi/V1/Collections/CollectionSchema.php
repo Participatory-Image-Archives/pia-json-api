@@ -48,11 +48,14 @@ class CollectionSchema extends Schema
 
             BelongsToMany::make('images'),
             BelongsToMany::make('comments'),
-            BelongsToMany::make('people'),
+            BelongsToMany::make('agents'),
             BelongsToMany::make('literatures'),
             BelongsToMany::make('alt-labels'),
             BelongsToMany::make('documents'),
             BelongsToMany::make('keywords'),
+
+            BelongsToMany::make('maps'),
+            BelongsToMany::make('notes'),
 
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
