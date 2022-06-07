@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return "PIA Data API<br><br><a href='/home'>&mdash; JSON home document</a>";
+    return "PIA Data API<br><br><a href='/docs'>&mdash; OpenAPI Docs</a><br><a href='/home'>&mdash; JSON home document</a>";
 });
 
 Route::get('/docs', function(){
