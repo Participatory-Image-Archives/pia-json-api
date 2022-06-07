@@ -18,6 +18,10 @@ Route::get('/', function () {
     return "PIA Data API<br><br><a href='/home'>&mdash; JSON home document</a>";
 });
 
+Route::get('/docs', function(){
+    return view('docs/index');
+});
+
 /**
  * JSON Home Document
  * https://datatracker.ietf.org/doc/html/draft-nottingham-json-home-06

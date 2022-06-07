@@ -1,0 +1,376 @@
+openapi: 3.0.2
+info:
+  title: PIA JSON Data API
+  version: 1.0
+
+servers:
+  - url: https://data.participatory-archives.ch/api/v1
+
+x-tagGroups:
+  - name: Routes
+    tags:
+      - agents
+
+paths:
+  /agents:
+    get:
+      description: List Agents
+      tags:
+        - agents
+      parameters:
+        - $ref: '#/components/parameters/page_size'
+        - $ref: '#/components/parameters/page_number'
+      responses:
+        '200':
+          description: A list of agents
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonapi:
+                    $ref: '#/components/schemas/jsonapi'
+                  links:
+                      $ref: '#/components/schemas/pagination'
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Agent'
+                  included:
+                    type: array
+                    uniqueItems: true
+                    items:
+                      $ref: '#/components/schemas/resource'
+
+  /agents/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: the agent id 
+        schema:
+          type: string
+    get:
+      description: View Agent
+      tags:
+        - agents
+      responses:
+        '200':
+          description: Returns single agent
+          content:
+            application/vnd.api+json:
+              schema:
+                type: object
+                properties:
+                  jsonapi:
+                    $ref: '#/components/schemas/jsonapi'
+                  links:
+                    type: object
+                    properties:
+                      self:
+                        $ref: '#/components/schemas/link'
+                  data:
+                    $ref: '#/components/schemas/Agent'
+                  included:
+                    type: array
+                    uniqueItems: true
+                    items:
+                      $ref: '#/components/schemas/resource'
+
+components:
+  parameters:
+    page_size:
+      in: query
+      name: page[size]
+      required: false
+      schema:
+        type: integer
+        minimum: 0
+      description: How many results should load per page
+    page_number:
+      in: query
+      name: page[number]
+      required: false
+      schema:
+        type: integer
+        minimum: 0
+      description: Which page of the pagination should be displayed
+
+  schemas:
+    jsonapi:
+      type: object
+      description: The server's implementation
+      properties:
+        version:
+          type: string
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: false
+    resource:
+      type: object
+      required:
+      - type
+      - id
+      additionalProperties: false
+      properties:
+        type:
+          $ref: '#/components/schemas/type'
+        id:
+          $ref: '#/components/schemas/id'
+        attributes:
+          type: object
+        relationships:
+          type: object
+        links:
+          $ref: '#/components/schemas/links'
+        meta:
+          $ref: '#/components/schemas/meta'
+    link:
+      oneOf:
+      - description: a string containing the link's URL
+        type: string
+        format: uri-reference
+      - type: object
+        required:
+        - href
+        properties:
+          href:
+            description: a string containing the link's URL
+            type: string
+            format: uri-reference
+          meta:
+            $ref: '#/components/schemas/meta'
+    links:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/link'
+    reltoone:
+      description: a singular 'to-one' relationship
+      type: object
+      properties:
+        links:
+          $ref: '#/components/schemas/relationshipLinks'
+            #        data:
+            #          $ref: '#/components/schemas/relationshipToOne'
+            #        meta:
+            #          $ref: '#/components/schemas/meta'
+    relationshipToOne:
+      description: reference to other resource in a to-one relationship
+      anyOf:
+      - $ref: '#/components/schemas/nulltype'
+      - $ref: '#/components/schemas/linkage'
+    reltomany:
+      description: a multiple 'to-many' relationship
+      type: object
+      properties:
+        links:
+          $ref: '#/components/schemas/relationshipLinks'
+            #        data:
+            #          $ref: '#/components/schemas/relationshipToMany'
+            #        meta:
+            #          $ref: '#/components/schemas/meta'
+    relationshipLinks:
+      description: optional references to other resource objects
+      type: object
+        #      additionalProperties: true
+      properties:
+        self:
+          $ref: '#/components/schemas/link'
+        related:
+          $ref: '#/components/schemas/link'
+    relationshipToMany:
+      description: An array of objects each containing the 'type' and 'id' for to-many
+        relationships
+      type: array
+      items:
+        $ref: '#/components/schemas/linkage'
+      uniqueItems: true
+    ResourceIdentifierObject:
+      oneOf:
+      - $ref: '#/components/schemas/relationshipToOne'
+      - $ref: '#/components/schemas/relationshipToMany'
+    linkage:
+      type: object
+      description: the 'type' and 'id'
+      required:
+      - type
+      - id
+      properties:
+        type:
+          $ref: '#/components/schemas/type'
+        id:
+          $ref: '#/components/schemas/id'
+        meta:
+          $ref: '#/components/schemas/meta'
+    pagination:
+      type: object
+      properties:
+        first:
+          $ref: '#/components/schemas/pageref'
+        last:
+          $ref: '#/components/schemas/pageref'
+        prev:
+          $ref: '#/components/schemas/pageref'
+        next:
+          $ref: '#/components/schemas/pageref'
+    pageref:
+      oneOf:
+      - type: string
+        format: uri-reference
+      - $ref: '#/components/schemas/nulltype'
+    failure:
+      type: object
+      required:
+      - errors
+      properties:
+        errors:
+          $ref: '#/components/schemas/errors'
+        meta:
+          $ref: '#/components/schemas/meta'
+        jsonapi:
+          $ref: '#/components/schemas/jsonapi'
+        links:
+          $ref: '#/components/schemas/links'
+    errors:
+      type: array
+      items:
+        $ref: '#/components/schemas/error'
+      uniqueItems: true
+    error:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+        status:
+          type: string
+        links:
+          $ref: '#/components/schemas/links'
+        code:
+          type: string
+        title:
+          type: string
+        detail:
+          type: string
+        source:
+          type: object
+          properties:
+            pointer:
+              type: string
+              description: A [JSON Pointer](https://tools.ietf.org/html/rfc6901) to
+                the associated entity in the request document [e.g. `/data` for a
+                primary data object, or `/data/attributes/title` for a specific attribute.
+            parameter:
+              type: string
+              description: A string indicating which query parameter caused the error.
+            meta:
+              $ref: '#/components/schemas/meta'
+    onlymeta:
+      additionalProperties: false
+      properties:
+        meta:
+          $ref: '#/components/schemas/meta'
+    meta:
+      type: object
+      additionalProperties: true
+    datum:
+      description: singular item
+      properties:
+        data:
+          $ref: '#/components/schemas/resource'
+    nulltype:
+      type: string
+      nullable: true
+      default: null
+    type:
+      type: string
+      description: The [type](https://jsonapi.org/format/#document-resource-object-identification)
+        member is used to describe resource objects that share common attributes and
+        relationships.
+    id:
+      type: string
+      description: "Each resource object\u2019s type and id pair MUST [identify](https://jsonapi.org/format/#document-resource-object-identification)\
+        \ a single, unique resource."
+
+    Agent:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/type'
+        id:
+          $ref: '#/components/schemas/id'
+        attributes:
+          type: object
+          properties:
+            id:
+              type: integer
+            title:
+              type: string
+            name:
+              type: string
+            family:
+              type: string
+            description:
+              type: string
+        relationships:
+          type: object
+          properties:
+            birthdate:
+              $ref: '#/components/schemas/reltoone'
+            birthplace:
+              $ref: '#/components/schemas/reltoone'
+            deathdate:
+              $ref: '#/components/schemas/reltoone'
+            deathplace:
+              $ref: '#/components/schemas/reltoone'
+            images:
+              $ref: '#/components/schemas/reltomany'
+            albums:
+              $ref: '#/components/schemas/reltomany'
+            collections:
+              $ref: '#/components/schemas/reltomany'
+        links:
+          type: object
+          properties:
+            self:
+              $ref: '#/components/schemas/link'
+
+    Date:
+      type: object
+      properties:
+        date:
+          type: string
+          format: date
+        end_date:
+          type: string
+          format: date
+        accuracy:
+          type: int
+          default: 1
+          description: |
+            1: to the day<br>
+            2: to the month<br>
+            3: to the year
+        date_string:
+          type: string
+          description: Legacy from import, kept for security because of special date string format.
+    Image:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+    Place:
+      type: object
+      properties:
+        label:
+          type: string
+        latitude:
+          type: number
+          format: float
+        longitude:
+          type: number
+          format: float
+        origin:
+          type: string

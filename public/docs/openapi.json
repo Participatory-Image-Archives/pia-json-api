@@ -1,0 +1,548 @@
+{
+  "openapi" : "3.0.2",
+  "info" : {
+    "title" : "PIA JSON Data API",
+    "version" : "1.0"
+  },
+  "servers" : [ {
+    "url" : "https://data.participatory-archives.ch/api/v1"
+  } ],
+  "paths" : {
+    "/agents" : {
+      "get" : {
+        "description" : "List Agents",
+        "parameters" : [ {
+          "description" : "How many results should load per page",
+          "explode" : true,
+          "in" : "query",
+          "name" : "page[size]",
+          "required" : false,
+          "schema" : {
+            "minimum" : 0,
+            "type" : "integer"
+          },
+          "style" : "form"
+        }, {
+          "description" : "Which page of the pagination should be displayed",
+          "explode" : true,
+          "in" : "query",
+          "name" : "page[number]",
+          "required" : false,
+          "schema" : {
+            "minimum" : 0,
+            "type" : "integer"
+          },
+          "style" : "form"
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/_agents_get_200_response"
+                }
+              }
+            },
+            "description" : "A list of agents"
+          }
+        },
+        "tags" : [ "agents" ]
+      }
+    },
+    "/agents/{id}" : {
+      "get" : {
+        "description" : "View Agent",
+        "parameters" : [ {
+          "description" : "the agent id",
+          "explode" : false,
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "style" : "simple"
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/vnd.api+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/_agents__id__get_200_response"
+                }
+              }
+            },
+            "description" : "Returns single agent"
+          }
+        },
+        "tags" : [ "agents" ]
+      }
+    }
+  },
+  "components" : {
+    "parameters" : {
+      "page_size" : {
+        "description" : "How many results should load per page",
+        "explode" : true,
+        "in" : "query",
+        "name" : "page[size]",
+        "required" : false,
+        "schema" : {
+          "minimum" : 0,
+          "type" : "integer"
+        },
+        "style" : "form"
+      },
+      "page_number" : {
+        "description" : "Which page of the pagination should be displayed",
+        "explode" : true,
+        "in" : "query",
+        "name" : "page[number]",
+        "required" : false,
+        "schema" : {
+          "minimum" : 0,
+          "type" : "integer"
+        },
+        "style" : "form"
+      }
+    },
+    "schemas" : {
+      "jsonapi" : {
+        "additionalProperties" : false,
+        "description" : "The server's implementation",
+        "properties" : {
+          "version" : {
+            "type" : "string"
+          },
+          "meta" : {
+            "$ref" : "#/components/schemas/meta"
+          }
+        },
+        "type" : "object"
+      },
+      "resource" : {
+        "additionalProperties" : false,
+        "properties" : {
+          "type" : {
+            "$ref" : "#/components/schemas/type"
+          },
+          "id" : {
+            "$ref" : "#/components/schemas/id"
+          },
+          "attributes" : {
+            "type" : "object"
+          },
+          "relationships" : {
+            "type" : "object"
+          },
+          "links" : {
+            "$ref" : "#/components/schemas/links"
+          },
+          "meta" : {
+            "$ref" : "#/components/schemas/meta"
+          }
+        },
+        "required" : [ "id", "type" ],
+        "type" : "object"
+      },
+      "link" : {
+        "oneOf" : [ {
+          "description" : "a string containing the link's URL",
+          "format" : "uri-reference",
+          "type" : "string"
+        }, {
+          "$ref" : "#/components/schemas/link_oneOf"
+        } ]
+      },
+      "links" : {
+        "additionalProperties" : {
+          "$ref" : "#/components/schemas/link"
+        },
+        "type" : "object"
+      },
+      "reltoone" : {
+        "description" : "a singular 'to-one' relationship",
+        "properties" : {
+          "links" : {
+            "$ref" : "#/components/schemas/relationshipLinks"
+          }
+        },
+        "type" : "object"
+      },
+      "relationshipToOne" : {
+        "anyOf" : [ {
+          "$ref" : "#/components/schemas/nulltype"
+        }, {
+          "$ref" : "#/components/schemas/linkage"
+        } ],
+        "description" : "reference to other resource in a to-one relationship"
+      },
+      "reltomany" : {
+        "description" : "a multiple 'to-many' relationship",
+        "properties" : {
+          "links" : {
+            "$ref" : "#/components/schemas/relationshipLinks"
+          }
+        },
+        "type" : "object"
+      },
+      "relationshipLinks" : {
+        "description" : "optional references to other resource objects",
+        "properties" : {
+          "self" : {
+            "$ref" : "#/components/schemas/link"
+          },
+          "related" : {
+            "$ref" : "#/components/schemas/link"
+          }
+        },
+        "type" : "object"
+      },
+      "relationshipToMany" : {
+        "description" : "An array of objects each containing the 'type' and 'id' for to-many relationships",
+        "items" : {
+          "$ref" : "#/components/schemas/linkage"
+        },
+        "type" : "array",
+        "uniqueItems" : true
+      },
+      "ResourceIdentifierObject" : {
+        "oneOf" : [ {
+          "$ref" : "#/components/schemas/relationshipToOne"
+        }, {
+          "$ref" : "#/components/schemas/relationshipToMany"
+        } ]
+      },
+      "linkage" : {
+        "description" : "the 'type' and 'id'",
+        "properties" : {
+          "type" : {
+            "$ref" : "#/components/schemas/type"
+          },
+          "id" : {
+            "$ref" : "#/components/schemas/id"
+          },
+          "meta" : {
+            "$ref" : "#/components/schemas/meta"
+          }
+        },
+        "required" : [ "id", "type" ],
+        "type" : "object"
+      },
+      "pagination" : {
+        "properties" : {
+          "first" : {
+            "$ref" : "#/components/schemas/pageref"
+          },
+          "last" : {
+            "$ref" : "#/components/schemas/pageref"
+          },
+          "prev" : {
+            "$ref" : "#/components/schemas/pageref"
+          },
+          "next" : {
+            "$ref" : "#/components/schemas/pageref"
+          }
+        },
+        "type" : "object"
+      },
+      "pageref" : {
+        "oneOf" : [ {
+          "format" : "uri-reference",
+          "type" : "string"
+        }, {
+          "$ref" : "#/components/schemas/nulltype"
+        } ]
+      },
+      "failure" : {
+        "properties" : {
+          "errors" : {
+            "$ref" : "#/components/schemas/errors"
+          },
+          "meta" : {
+            "$ref" : "#/components/schemas/meta"
+          },
+          "jsonapi" : {
+            "$ref" : "#/components/schemas/jsonapi"
+          },
+          "links" : {
+            "$ref" : "#/components/schemas/links"
+          }
+        },
+        "required" : [ "errors" ],
+        "type" : "object"
+      },
+      "errors" : {
+        "items" : {
+          "$ref" : "#/components/schemas/error"
+        },
+        "type" : "array",
+        "uniqueItems" : true
+      },
+      "error" : {
+        "additionalProperties" : false,
+        "properties" : {
+          "id" : {
+            "type" : "string"
+          },
+          "status" : {
+            "type" : "string"
+          },
+          "links" : {
+            "$ref" : "#/components/schemas/links"
+          },
+          "code" : {
+            "type" : "string"
+          },
+          "title" : {
+            "type" : "string"
+          },
+          "detail" : {
+            "type" : "string"
+          },
+          "source" : {
+            "$ref" : "#/components/schemas/error_source"
+          }
+        },
+        "type" : "object"
+      },
+      "onlymeta" : {
+        "additionalProperties" : false,
+        "properties" : {
+          "meta" : {
+            "$ref" : "#/components/schemas/meta"
+          }
+        },
+        "type" : "object"
+      },
+      "meta" : {
+        "additionalProperties" : true,
+        "type" : "object"
+      },
+      "datum" : {
+        "description" : "singular item",
+        "properties" : {
+          "data" : {
+            "$ref" : "#/components/schemas/resource"
+          }
+        }
+      },
+      "nulltype" : {
+        "nullable" : true,
+        "type" : "string"
+      },
+      "type" : {
+        "description" : "The [type](https://jsonapi.org/format/#document-resource-object-identification) member is used to describe resource objects that share common attributes and relationships.",
+        "type" : "string"
+      },
+      "id" : {
+        "description" : "Each resource object’s type and id pair MUST [identify](https://jsonapi.org/format/#document-resource-object-identification) a single, unique resource.",
+        "type" : "string"
+      },
+      "Agent" : {
+        "properties" : {
+          "type" : {
+            "$ref" : "#/components/schemas/type"
+          },
+          "id" : {
+            "$ref" : "#/components/schemas/id"
+          },
+          "attributes" : {
+            "$ref" : "#/components/schemas/Agent_attributes"
+          },
+          "relationships" : {
+            "$ref" : "#/components/schemas/Agent_relationships"
+          },
+          "links" : {
+            "$ref" : "#/components/schemas/_agents__id__get_200_response_links"
+          }
+        },
+        "type" : "object"
+      },
+      "Date" : {
+        "properties" : {
+          "date" : {
+            "format" : "date",
+            "type" : "string"
+          },
+          "end_date" : {
+            "format" : "date",
+            "type" : "string"
+          },
+          "accuracy" : {
+            "description" : "1: to the day<br>\n2: to the month<br>\n3: to the year\n",
+            "type" : "int"
+          },
+          "date_string" : {
+            "description" : "Legacy from import, kept for security because of special date string format.",
+            "type" : "string"
+          }
+        },
+        "type" : "object"
+      },
+      "Image" : {
+        "properties" : {
+          "id" : {
+            "type" : "integer"
+          },
+          "title" : {
+            "type" : "string"
+          }
+        },
+        "type" : "object"
+      },
+      "Place" : {
+        "properties" : {
+          "label" : {
+            "type" : "string"
+          },
+          "latitude" : {
+            "format" : "float",
+            "type" : "number"
+          },
+          "longitude" : {
+            "format" : "float",
+            "type" : "number"
+          },
+          "origin" : {
+            "type" : "string"
+          }
+        },
+        "type" : "object"
+      },
+      "_agents_get_200_response" : {
+        "properties" : {
+          "jsonapi" : {
+            "$ref" : "#/components/schemas/jsonapi"
+          },
+          "links" : {
+            "$ref" : "#/components/schemas/pagination"
+          },
+          "data" : {
+            "items" : {
+              "$ref" : "#/components/schemas/Agent"
+            },
+            "type" : "array"
+          },
+          "included" : {
+            "items" : {
+              "$ref" : "#/components/schemas/resource"
+            },
+            "type" : "array",
+            "uniqueItems" : true
+          }
+        },
+        "type" : "object"
+      },
+      "_agents__id__get_200_response_links" : {
+        "properties" : {
+          "self" : {
+            "$ref" : "#/components/schemas/link"
+          }
+        },
+        "type" : "object"
+      },
+      "_agents__id__get_200_response" : {
+        "properties" : {
+          "jsonapi" : {
+            "$ref" : "#/components/schemas/jsonapi"
+          },
+          "links" : {
+            "$ref" : "#/components/schemas/_agents__id__get_200_response_links"
+          },
+          "data" : {
+            "$ref" : "#/components/schemas/Agent"
+          },
+          "included" : {
+            "items" : {
+              "$ref" : "#/components/schemas/resource"
+            },
+            "type" : "array",
+            "uniqueItems" : true
+          }
+        },
+        "type" : "object"
+      },
+      "link_oneOf" : {
+        "properties" : {
+          "href" : {
+            "description" : "a string containing the link's URL",
+            "format" : "uri-reference",
+            "type" : "string"
+          },
+          "meta" : {
+            "$ref" : "#/components/schemas/meta"
+          }
+        },
+        "required" : [ "href" ],
+        "type" : "object"
+      },
+      "error_source" : {
+        "properties" : {
+          "pointer" : {
+            "description" : "A [JSON Pointer](https://tools.ietf.org/html/rfc6901) to the associated entity in the request document [e.g. `/data` for a primary data object, or `/data/attributes/title` for a specific attribute.",
+            "type" : "string"
+          },
+          "parameter" : {
+            "description" : "A string indicating which query parameter caused the error.",
+            "type" : "string"
+          },
+          "meta" : {
+            "$ref" : "#/components/schemas/meta"
+          }
+        },
+        "type" : "object"
+      },
+      "Agent_attributes" : {
+        "properties" : {
+          "id" : {
+            "type" : "integer"
+          },
+          "title" : {
+            "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "family" : {
+            "type" : "string"
+          },
+          "description" : {
+            "type" : "string"
+          }
+        },
+        "type" : "object"
+      },
+      "Agent_relationships" : {
+        "properties" : {
+          "birthdate" : {
+            "$ref" : "#/components/schemas/reltoone"
+          },
+          "birthplace" : {
+            "$ref" : "#/components/schemas/reltoone"
+          },
+          "deathdate" : {
+            "$ref" : "#/components/schemas/reltoone"
+          },
+          "deathplace" : {
+            "$ref" : "#/components/schemas/reltoone"
+          },
+          "images" : {
+            "$ref" : "#/components/schemas/reltomany"
+          },
+          "albums" : {
+            "$ref" : "#/components/schemas/reltomany"
+          },
+          "collections" : {
+            "$ref" : "#/components/schemas/reltomany"
+          }
+        },
+        "type" : "object"
+      }
+    }
+  },
+  "x-tagGroups" : [ {
+    "name" : "Routes",
+    "tags" : [ "agents" ]
+  } ]
+}
