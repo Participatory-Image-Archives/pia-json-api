@@ -70,12 +70,17 @@ JsonApiRoute::server('v1')
             $relationships->hasMany('images');
             $relationships->hasMany('alt-labels');
         });
+
         $server->resource('comments', JsonApiController::class)->relationships(function ($relationships) {
             $relationships->hasMany('collections');
             $relationships->hasMany('images');
         });
 
         $server->resource('alt-labels', JsonApiController::class);
+
+        $server->resource('notes', JsonApiController::class)->relationships(function ($relationships) {
+            $relationships->hasMany('collections');
+        });
 
         /**
          * Calls
