@@ -48,9 +48,6 @@ class PlaceSchema extends Schema
             Number::make('latitude'),
             Number::make('longitude'),
 
-            Str::make('asv_id'),
-            Str::make('label'),
-
             BelongsToMany::make('images'),
 
             DateTime::make('createdAt')->sortable()->readOnly(),

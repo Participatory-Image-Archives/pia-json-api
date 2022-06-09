@@ -1,0 +1,478 @@
+openapi: 3.0.2
+info:
+  title: PIA JSON Data API
+  version: 1.0
+
+servers:
+  - url: https://data.participatory-archives.ch/api/v1
+
+x-tagGroups:
+  - name: Routes
+    tags:
+      - agents
+
+paths:
+  /agents:
+    get:
+      description: List Agents
+      tags:
+        - agents
+      parameters:
+        - $ref: '#/components/parameters/page_size'
+        - $ref: '#/components/parameters/page_number'
+      responses:
+        '200':
+          description: A list of agents
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonapi:
+                    $ref: '#/components/schemas/jsonapi'
+                  links:
+                      $ref: '#/components/schemas/pagination'
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Agent'
+                  included:
+                    type: array
+                    uniqueItems: true
+                    items:
+                      $ref: '#/components/schemas/resource'
+
+  /agents/{id}:
+    parameters:
+      - $ref: '#/components/parameters/item_id'
+    get:
+      description: View Agent
+      tags:
+        - agents
+      responses:
+        '200':
+          description: Returns single agent
+          content:
+            application/vnd.api+json:
+              schema:
+                type: object
+                properties:
+                  jsonapi:
+                    $ref: '#/components/schemas/jsonapi'
+                  links:
+                    type: object
+                    properties:
+                      self:
+                        $ref: '#/components/schemas/link'
+                  data:
+                    $ref: '#/components/schemas/Agent'
+                  included:
+                    type: array
+                    uniqueItems: true
+                    items:
+                      $ref: '#/components/schemas/resource'
+
+  /albums:
+    get:
+      description: List Albums
+      tags:
+        - albums
+      parameters:
+        - $ref: '#/components/parameters/page_size'
+        - $ref: '#/components/parameters/page_number'
+      responses:
+        '200':
+          description: A list of albums
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonapi:
+                    $ref: '#/components/schemas/jsonapi'
+                  links:
+                      $ref: '#/components/schemas/pagination'
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Album'
+                  included:
+                    type: array
+                    uniqueItems: true
+                    items:
+                      $ref: '#/components/schemas/resource'
+
+  /albums/{id}:
+    parameters:
+      - $ref: '#/components/parameters/item_id'
+    get:
+      description: View Album
+      tags:
+        - albums
+      responses:
+        '200':
+          description: Returns single album
+          content:
+            application/vnd.api+json:
+              schema:
+                type: object
+                properties:
+                  jsonapi:
+                    $ref: '#/components/schemas/jsonapi'
+                  links:
+                    type: object
+                    properties:
+                      self:
+                        $ref: '#/components/schemas/link'
+                  data:
+                    $ref: '#/components/schemas/Album'
+                  included:
+                    type: array
+                    uniqueItems: true
+                    items:
+                      $ref: '#/components/schemas/resource'
+
+  /places:
+    get:
+      description: List Places
+      tags:
+        - places
+      parameters:
+        - $ref: '#/components/parameters/page_size'
+        - $ref: '#/components/parameters/page_number'
+      responses:
+        '200':
+          description: A list of places
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonapi:
+                    $ref: '#/components/schemas/jsonapi'
+                  links:
+                      $ref: '#/components/schemas/pagination'
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Place'
+                  included:
+                    type: array
+                    uniqueItems: true
+                    items:
+                      $ref: '#/components/schemas/resource'
+
+  /places/{id}:
+    parameters:
+      - $ref: '#/components/parameters/item_id'
+    get:
+      description: View Place
+      tags:
+        - places
+      responses:
+        '200':
+          description: Returns single place
+          content:
+            application/vnd.api+json:
+              schema:
+                type: object
+                properties:
+                  jsonapi:
+                    $ref: '#/components/schemas/jsonapi'
+                  links:
+                    type: object
+                    properties:
+                      self:
+                        $ref: '#/components/schemas/link'
+                  data:
+                    $ref: '#/components/schemas/Place'
+                  included:
+                    type: array
+                    uniqueItems: true
+                    items:
+                      $ref: '#/components/schemas/resource'
+
+
+components:
+  parameters:
+    page_size:
+      in: query
+      name: page[size]
+      required: false
+      schema:
+        type: integer
+        minimum: 0
+      description: How many results should load per page
+    page_number:
+      in: query
+      name: page[number]
+      required: false
+      schema:
+        type: integer
+        minimum: 0
+      description: Which page of the pagination should be displayed
+    item_id:
+      name: id
+      in: path
+      required: true
+      description: the agent id 
+      schema:
+        type: string
+
+  schemas:
+    jsonapi:
+      type: object
+      description: The server's implementation
+      properties:
+        version:
+          type: string
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: false
+    resource:
+      type: object
+      required:
+      - type
+      - id
+      additionalProperties: false
+      properties:
+        type:
+          $ref: '#/components/schemas/type'
+        id:
+          $ref: '#/components/schemas/id'
+        attributes:
+          type: object
+        relationships:
+          type: object
+        links:
+          $ref: '#/components/schemas/links'
+        meta:
+          $ref: '#/components/schemas/meta'
+    link:
+      oneOf:
+      - description: a string containing the link's URL
+        type: string
+        format: uri-reference
+      - type: object
+        required:
+        - href
+        properties:
+          href:
+            description: a string containing the link's URL
+            type: string
+            format: uri-reference
+          meta:
+            $ref: '#/components/schemas/meta'
+    links:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/link'
+    reltoone:
+      description: a singular 'to-one' relationship
+      type: object
+      properties:
+        links:
+          $ref: '#/components/schemas/relationshipLinks'
+            #        data:
+            #          $ref: '#/components/schemas/relationshipToOne'
+            #        meta:
+            #          $ref: '#/components/schemas/meta'
+    relationshipToOne:
+      description: reference to other resource in a to-one relationship
+      anyOf:
+      - $ref: '#/components/schemas/nulltype'
+      - $ref: '#/components/schemas/linkage'
+    reltomany:
+      description: a multiple 'to-many' relationship
+      type: object
+      properties:
+        links:
+          $ref: '#/components/schemas/relationshipLinks'
+            #        data:
+            #          $ref: '#/components/schemas/relationshipToMany'
+            #        meta:
+            #          $ref: '#/components/schemas/meta'
+    relationshipLinks:
+      description: optional references to other resource objects
+      type: object
+        #      additionalProperties: true
+      properties:
+        self:
+          $ref: '#/components/schemas/link'
+        related:
+          $ref: '#/components/schemas/link'
+    relationshipToMany:
+      description: An array of objects each containing the 'type' and 'id' for to-many
+        relationships
+      type: array
+      items:
+        $ref: '#/components/schemas/linkage'
+      uniqueItems: true
+    linkage:
+      type: object
+      description: the 'type' and 'id'
+      required:
+      - type
+      - id
+      properties:
+        type:
+          $ref: '#/components/schemas/type'
+        id:
+          $ref: '#/components/schemas/id'
+        meta:
+          $ref: '#/components/schemas/meta'
+    pagination:
+      type: object
+      properties:
+        first:
+          $ref: '#/components/schemas/pageref'
+        last:
+          $ref: '#/components/schemas/pageref'
+        prev:
+          $ref: '#/components/schemas/pageref'
+        next:
+          $ref: '#/components/schemas/pageref'
+    meta:
+      type: object
+      additionalProperties: true
+    nulltype:
+      type: string
+      nullable: true
+      default: null
+    type:
+      type: string
+      description: The [type](https://jsonapi.org/format/#document-resource-object-identification)
+        is used to describe resource objects that share common attributes and
+        relationships.
+    id:
+      type: string
+      description: "Each resource object\u2019s type and id pair MUST [identify](https://jsonapi.org/format/#document-resource-object-identification)\
+        \ a single, unique resource."
+
+    Agent:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/type'
+        id:
+          $ref: '#/components/schemas/id'
+        attributes:
+          type: object
+          properties:
+            id:
+              type: integer
+            title:
+              type: string
+            name:
+              type: string
+            family:
+              type: string
+            description:
+              type: string
+        relationships:
+          type: object
+          properties:
+            birthdate:
+              $ref: '#/components/schemas/reltoone'
+            birthplace:
+              $ref: '#/components/schemas/reltoone'
+            deathdate:
+              $ref: '#/components/schemas/reltoone'
+            deathplace:
+              $ref: '#/components/schemas/reltoone'
+            images:
+              $ref: '#/components/schemas/reltomany'
+            albums:
+              $ref: '#/components/schemas/reltomany'
+            collections:
+              $ref: '#/components/schemas/reltomany'
+        links:
+          type: object
+          properties:
+            self:
+              $ref: '#/components/schemas/link'
+
+    Album:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/type'
+        id:
+          $ref: '#/components/schemas/id'
+        attributes:
+          type: object
+          properties:
+            id:
+              type: integer
+            title:
+              type: string
+            label:
+              type: string
+            signature:
+              type: string
+            description:
+              type: string
+        relationships:
+          type: object
+          properties:
+            date:
+              $ref: '#/components/schemas/reltoone'
+            images:
+              $ref: '#/components/schemas/reltomany'
+            collections:
+              $ref: '#/components/schemas/reltomany'
+            comments:
+              $ref: '#/components/schemas/reltomany'
+        links:
+          type: object
+          properties:
+            self:
+              $ref: '#/components/schemas/link'
+
+    Place:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/type'
+        id:
+          $ref: '#/components/schemas/id'
+        attributes:
+          type: object
+          properties:
+            id:
+              type: integer
+            label:
+              type: string
+            origin:
+              type: string
+            geometry:
+              type: string
+            latitude:
+              type: number
+              format: float
+            longitude:
+              type: number
+              format: float
+            geoname_id:
+              type: string
+            geoname_url:
+              type: string
+            geoname_code:
+              type: string
+            geoname_code_name:
+              type: string
+            geonames_division_level:
+              type: string
+            wiki_uri:
+              type: string
+        relationships:
+          type: object
+          properties:
+            images:
+              $ref: '#/components/schemas/reltomany'
+        links:
+          type: object
+          properties:
+            self:
+              $ref: '#/components/schemas/link'
+

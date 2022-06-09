@@ -77,6 +77,146 @@
         },
         "tags" : [ "agents" ]
       }
+    },
+    "/albums" : {
+      "get" : {
+        "description" : "List Albums",
+        "parameters" : [ {
+          "description" : "How many results should load per page",
+          "explode" : true,
+          "in" : "query",
+          "name" : "page[size]",
+          "required" : false,
+          "schema" : {
+            "minimum" : 0,
+            "type" : "integer"
+          },
+          "style" : "form"
+        }, {
+          "description" : "Which page of the pagination should be displayed",
+          "explode" : true,
+          "in" : "query",
+          "name" : "page[number]",
+          "required" : false,
+          "schema" : {
+            "minimum" : 0,
+            "type" : "integer"
+          },
+          "style" : "form"
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/_albums_get_200_response"
+                }
+              }
+            },
+            "description" : "A list of albums"
+          }
+        },
+        "tags" : [ "albums" ]
+      }
+    },
+    "/albums/{id}" : {
+      "get" : {
+        "description" : "View Album",
+        "parameters" : [ {
+          "description" : "the agent id",
+          "explode" : false,
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "style" : "simple"
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/vnd.api+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/_albums__id__get_200_response"
+                }
+              }
+            },
+            "description" : "Returns single album"
+          }
+        },
+        "tags" : [ "albums" ]
+      }
+    },
+    "/places" : {
+      "get" : {
+        "description" : "List Places",
+        "parameters" : [ {
+          "description" : "How many results should load per page",
+          "explode" : true,
+          "in" : "query",
+          "name" : "page[size]",
+          "required" : false,
+          "schema" : {
+            "minimum" : 0,
+            "type" : "integer"
+          },
+          "style" : "form"
+        }, {
+          "description" : "Which page of the pagination should be displayed",
+          "explode" : true,
+          "in" : "query",
+          "name" : "page[number]",
+          "required" : false,
+          "schema" : {
+            "minimum" : 0,
+            "type" : "integer"
+          },
+          "style" : "form"
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/_places_get_200_response"
+                }
+              }
+            },
+            "description" : "A list of places"
+          }
+        },
+        "tags" : [ "places" ]
+      }
+    },
+    "/places/{id}" : {
+      "get" : {
+        "description" : "View Place",
+        "parameters" : [ {
+          "description" : "the agent id",
+          "explode" : false,
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "style" : "simple"
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/vnd.api+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/_places__id__get_200_response"
+                }
+              }
+            },
+            "description" : "Returns single place"
+          }
+        },
+        "tags" : [ "places" ]
+      }
     }
   },
   "components" : {
@@ -104,6 +244,17 @@
           "type" : "integer"
         },
         "style" : "form"
+      },
+      "item_id" : {
+        "description" : "the agent id",
+        "explode" : false,
+        "in" : "path",
+        "name" : "id",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        },
+        "style" : "simple"
       }
     },
     "schemas" : {
@@ -206,13 +357,6 @@
         "type" : "array",
         "uniqueItems" : true
       },
-      "ResourceIdentifierObject" : {
-        "oneOf" : [ {
-          "$ref" : "#/components/schemas/relationshipToOne"
-        }, {
-          "$ref" : "#/components/schemas/relationshipToMany"
-        } ]
-      },
       "linkage" : {
         "description" : "the 'type' and 'id'",
         "properties" : {
@@ -246,93 +390,16 @@
         },
         "type" : "object"
       },
-      "pageref" : {
-        "oneOf" : [ {
-          "format" : "uri-reference",
-          "type" : "string"
-        }, {
-          "$ref" : "#/components/schemas/nulltype"
-        } ]
-      },
-      "failure" : {
-        "properties" : {
-          "errors" : {
-            "$ref" : "#/components/schemas/errors"
-          },
-          "meta" : {
-            "$ref" : "#/components/schemas/meta"
-          },
-          "jsonapi" : {
-            "$ref" : "#/components/schemas/jsonapi"
-          },
-          "links" : {
-            "$ref" : "#/components/schemas/links"
-          }
-        },
-        "required" : [ "errors" ],
-        "type" : "object"
-      },
-      "errors" : {
-        "items" : {
-          "$ref" : "#/components/schemas/error"
-        },
-        "type" : "array",
-        "uniqueItems" : true
-      },
-      "error" : {
-        "additionalProperties" : false,
-        "properties" : {
-          "id" : {
-            "type" : "string"
-          },
-          "status" : {
-            "type" : "string"
-          },
-          "links" : {
-            "$ref" : "#/components/schemas/links"
-          },
-          "code" : {
-            "type" : "string"
-          },
-          "title" : {
-            "type" : "string"
-          },
-          "detail" : {
-            "type" : "string"
-          },
-          "source" : {
-            "$ref" : "#/components/schemas/error_source"
-          }
-        },
-        "type" : "object"
-      },
-      "onlymeta" : {
-        "additionalProperties" : false,
-        "properties" : {
-          "meta" : {
-            "$ref" : "#/components/schemas/meta"
-          }
-        },
-        "type" : "object"
-      },
       "meta" : {
         "additionalProperties" : true,
         "type" : "object"
-      },
-      "datum" : {
-        "description" : "singular item",
-        "properties" : {
-          "data" : {
-            "$ref" : "#/components/schemas/resource"
-          }
-        }
       },
       "nulltype" : {
         "nullable" : true,
         "type" : "string"
       },
       "type" : {
-        "description" : "The [type](https://jsonapi.org/format/#document-resource-object-identification) member is used to describe resource objects that share common attributes and relationships.",
+        "description" : "The [type](https://jsonapi.org/format/#document-resource-object-identification) is used to describe resource objects that share common attributes and relationships.",
         "type" : "string"
       },
       "id" : {
@@ -359,53 +426,42 @@
         },
         "type" : "object"
       },
-      "Date" : {
+      "Album" : {
         "properties" : {
-          "date" : {
-            "format" : "date",
-            "type" : "string"
+          "type" : {
+            "$ref" : "#/components/schemas/type"
           },
-          "end_date" : {
-            "format" : "date",
-            "type" : "string"
-          },
-          "accuracy" : {
-            "description" : "1: to the day<br>\n2: to the month<br>\n3: to the year\n",
-            "type" : "int"
-          },
-          "date_string" : {
-            "description" : "Legacy from import, kept for security because of special date string format.",
-            "type" : "string"
-          }
-        },
-        "type" : "object"
-      },
-      "Image" : {
-        "properties" : {
           "id" : {
-            "type" : "integer"
+            "$ref" : "#/components/schemas/id"
           },
-          "title" : {
-            "type" : "string"
+          "attributes" : {
+            "$ref" : "#/components/schemas/Album_attributes"
+          },
+          "relationships" : {
+            "$ref" : "#/components/schemas/Album_relationships"
+          },
+          "links" : {
+            "$ref" : "#/components/schemas/_agents__id__get_200_response_links"
           }
         },
         "type" : "object"
       },
       "Place" : {
         "properties" : {
-          "label" : {
-            "type" : "string"
+          "type" : {
+            "$ref" : "#/components/schemas/type"
           },
-          "latitude" : {
-            "format" : "float",
-            "type" : "number"
+          "id" : {
+            "$ref" : "#/components/schemas/id"
           },
-          "longitude" : {
-            "format" : "float",
-            "type" : "number"
+          "attributes" : {
+            "$ref" : "#/components/schemas/Place_attributes"
           },
-          "origin" : {
-            "type" : "string"
+          "relationships" : {
+            "$ref" : "#/components/schemas/Place_relationships"
+          },
+          "links" : {
+            "$ref" : "#/components/schemas/_agents__id__get_200_response_links"
           }
         },
         "type" : "object"
@@ -463,6 +519,96 @@
         },
         "type" : "object"
       },
+      "_albums_get_200_response" : {
+        "properties" : {
+          "jsonapi" : {
+            "$ref" : "#/components/schemas/jsonapi"
+          },
+          "links" : {
+            "$ref" : "#/components/schemas/pagination"
+          },
+          "data" : {
+            "items" : {
+              "$ref" : "#/components/schemas/Album"
+            },
+            "type" : "array"
+          },
+          "included" : {
+            "items" : {
+              "$ref" : "#/components/schemas/resource"
+            },
+            "type" : "array",
+            "uniqueItems" : true
+          }
+        },
+        "type" : "object"
+      },
+      "_albums__id__get_200_response" : {
+        "properties" : {
+          "jsonapi" : {
+            "$ref" : "#/components/schemas/jsonapi"
+          },
+          "links" : {
+            "$ref" : "#/components/schemas/_agents__id__get_200_response_links"
+          },
+          "data" : {
+            "$ref" : "#/components/schemas/Album"
+          },
+          "included" : {
+            "items" : {
+              "$ref" : "#/components/schemas/resource"
+            },
+            "type" : "array",
+            "uniqueItems" : true
+          }
+        },
+        "type" : "object"
+      },
+      "_places_get_200_response" : {
+        "properties" : {
+          "jsonapi" : {
+            "$ref" : "#/components/schemas/jsonapi"
+          },
+          "links" : {
+            "$ref" : "#/components/schemas/pagination"
+          },
+          "data" : {
+            "items" : {
+              "$ref" : "#/components/schemas/Place"
+            },
+            "type" : "array"
+          },
+          "included" : {
+            "items" : {
+              "$ref" : "#/components/schemas/resource"
+            },
+            "type" : "array",
+            "uniqueItems" : true
+          }
+        },
+        "type" : "object"
+      },
+      "_places__id__get_200_response" : {
+        "properties" : {
+          "jsonapi" : {
+            "$ref" : "#/components/schemas/jsonapi"
+          },
+          "links" : {
+            "$ref" : "#/components/schemas/_agents__id__get_200_response_links"
+          },
+          "data" : {
+            "$ref" : "#/components/schemas/Place"
+          },
+          "included" : {
+            "items" : {
+              "$ref" : "#/components/schemas/resource"
+            },
+            "type" : "array",
+            "uniqueItems" : true
+          }
+        },
+        "type" : "object"
+      },
       "link_oneOf" : {
         "properties" : {
           "href" : {
@@ -475,22 +621,6 @@
           }
         },
         "required" : [ "href" ],
-        "type" : "object"
-      },
-      "error_source" : {
-        "properties" : {
-          "pointer" : {
-            "description" : "A [JSON Pointer](https://tools.ietf.org/html/rfc6901) to the associated entity in the request document [e.g. `/data` for a primary data object, or `/data/attributes/title` for a specific attribute.",
-            "type" : "string"
-          },
-          "parameter" : {
-            "description" : "A string indicating which query parameter caused the error.",
-            "type" : "string"
-          },
-          "meta" : {
-            "$ref" : "#/components/schemas/meta"
-          }
-        },
         "type" : "object"
       },
       "Agent_attributes" : {
@@ -534,6 +664,94 @@
             "$ref" : "#/components/schemas/reltomany"
           },
           "collections" : {
+            "$ref" : "#/components/schemas/reltomany"
+          }
+        },
+        "type" : "object"
+      },
+      "Album_attributes" : {
+        "properties" : {
+          "id" : {
+            "type" : "integer"
+          },
+          "title" : {
+            "type" : "string"
+          },
+          "label" : {
+            "type" : "string"
+          },
+          "signature" : {
+            "type" : "string"
+          },
+          "description" : {
+            "type" : "string"
+          }
+        },
+        "type" : "object"
+      },
+      "Album_relationships" : {
+        "properties" : {
+          "date" : {
+            "$ref" : "#/components/schemas/reltoone"
+          },
+          "images" : {
+            "$ref" : "#/components/schemas/reltomany"
+          },
+          "collections" : {
+            "$ref" : "#/components/schemas/reltomany"
+          },
+          "comments" : {
+            "$ref" : "#/components/schemas/reltomany"
+          }
+        },
+        "type" : "object"
+      },
+      "Place_attributes" : {
+        "properties" : {
+          "id" : {
+            "type" : "integer"
+          },
+          "label" : {
+            "type" : "string"
+          },
+          "origin" : {
+            "type" : "string"
+          },
+          "geometry" : {
+            "type" : "string"
+          },
+          "latitude" : {
+            "format" : "float",
+            "type" : "number"
+          },
+          "longitude" : {
+            "format" : "float",
+            "type" : "number"
+          },
+          "geoname_id" : {
+            "type" : "string"
+          },
+          "geoname_url" : {
+            "type" : "string"
+          },
+          "geoname_code" : {
+            "type" : "string"
+          },
+          "geoname_code_name" : {
+            "type" : "string"
+          },
+          "geonames_division_level" : {
+            "type" : "string"
+          },
+          "wiki_uri" : {
+            "type" : "string"
+          }
+        },
+        "type" : "object"
+      },
+      "Place_relationships" : {
+        "properties" : {
+          "images" : {
             "$ref" : "#/components/schemas/reltomany"
           }
         },
