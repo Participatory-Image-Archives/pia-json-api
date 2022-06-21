@@ -132,9 +132,11 @@ JsonApiRoute::server('v1')
          */
         $server->resource('maps', JsonApiController::class)->relationships(function ($relationships) {
             $relationships->hasOne('map-keys');
+
             $relationships->hasMany('map-layers');
             $relationships->hasMany('linked-layers');
             $relationships->hasMany('map-entries');
+            $relationships->hasMany('documents');
         });
 
         $server->resource('map-layers', JsonApiController::class)->relationships(function ($relationships) {

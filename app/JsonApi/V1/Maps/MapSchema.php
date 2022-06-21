@@ -43,6 +43,7 @@ class MapSchema extends Schema
             HasMany::make('map-keys'),
             HasMany::make('map-layers'),
             BelongsToMany::make('linked-layers'),
+            BelongsToMany::make('documents'),
             HasManyThrough::make('map-entries'),
 
             DateTime::make('createdAt')->sortable()->readOnly(),
