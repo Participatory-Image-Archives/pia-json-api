@@ -37,7 +37,7 @@ class DocumentSchema extends Schema
             Str::make('original_file_name'),
             Str::make('base_path'),
 
-            BelongsToMany::make('images'),
+            BelongsToMany::make('aggregations'),
             BelongsToMany::make('collections'),
             BelongsToMany::make('maps'),
             BelongsToMany::make('map-entries'),
