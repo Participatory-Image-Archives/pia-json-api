@@ -20,6 +20,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/page_size'
         - $ref: '#/components/parameters/page_number'
+      operationId: listAgents
       responses:
         '200':
           description: A list of agents
@@ -49,6 +50,7 @@ paths:
       description: View Agent
       tags:
         - agents
+      operationId: getAgent
       responses:
         '200':
           description: Returns single agent
@@ -77,6 +79,7 @@ paths:
       description: List Albums
       tags:
         - albums
+      operationId: listAlbums
       parameters:
         - $ref: '#/components/parameters/page_size'
         - $ref: '#/components/parameters/page_number'
@@ -109,6 +112,7 @@ paths:
       description: View Album
       tags:
         - albums
+      operationId: getAlbum
       responses:
         '200':
           description: Returns single album
@@ -132,6 +136,193 @@ paths:
                     items:
                       $ref: '#/components/schemas/resource'
 
+  /collections:
+    get:
+      description: List Collections
+      tags:
+        - collections
+      parameters:
+        - $ref: '#/components/parameters/page_size'
+        - $ref: '#/components/parameters/page_number'
+      operationId: listCollections
+      responses:
+        '200':
+          description: A list of collections
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonapi:
+                    $ref: '#/components/schemas/jsonapi'
+                  links:
+                      $ref: '#/components/schemas/pagination'
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Collection'
+                  included:
+                    type: array
+                    uniqueItems: true
+                    items:
+                      $ref: '#/components/schemas/resource'
+
+  /collections/{id}:
+    parameters:
+      - $ref: '#/components/parameters/item_id'
+    get:
+      description: View collection
+      tags:
+        - collections
+      operationId: getCollection
+      responses:
+        '200':
+          description: Returns single collection
+          content:
+            application/vnd.api+json:
+              schema:
+                type: object
+                properties:
+                  jsonapi:
+                    $ref: '#/components/schemas/jsonapi'
+                  links:
+                    type: object
+                    properties:
+                      self:
+                        $ref: '#/components/schemas/link'
+                  data:
+                    $ref: '#/components/schemas/Collection'
+                  included:
+                    type: array
+                    uniqueItems: true
+                    items:
+                      $ref: '#/components/schemas/resource'
+
+  /comments:
+    get:
+      description: List comments
+      tags:
+        - comments
+      operationId: listComments
+      parameters:
+        - $ref: '#/components/parameters/page_size'
+        - $ref: '#/components/parameters/page_number'
+      responses:
+        '200':
+          description: A list of collections
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonapi:
+                    $ref: '#/components/schemas/jsonapi'
+                  links:
+                      $ref: '#/components/schemas/pagination'
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Comment'
+                  included:
+                    type: array
+                    uniqueItems: true
+                    items:
+                      $ref: '#/components/schemas/resource'
+
+  /comments/{id}:
+    parameters:
+      - $ref: '#/components/parameters/item_id'
+    get:
+      description: View comment
+      tags:
+        - comments
+      operationId: getComment
+      responses:
+        '200':
+          description: Returns single comment
+          content:
+            application/vnd.api+json:
+              schema:
+                type: object
+                properties:
+                  jsonapi:
+                    $ref: '#/components/schemas/jsonapi'
+                  links:
+                    type: object
+                    properties:
+                      self:
+                        $ref: '#/components/schemas/link'
+                  data:
+                    $ref: '#/components/schemas/Comment'
+                  included:
+                    type: array
+                    uniqueItems: true
+                    items:
+                      $ref: '#/components/schemas/resource'
+
+  /documents:
+    get:
+      description: List documents
+      tags:
+        - comments
+      operationId: listDocuments
+      parameters:
+        - $ref: '#/components/parameters/page_size'
+        - $ref: '#/components/parameters/page_number'
+      responses:
+        '200':
+          description: A list of collections
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jsonapi:
+                    $ref: '#/components/schemas/jsonapi'
+                  links:
+                      $ref: '#/components/schemas/pagination'
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Document'
+                  included:
+                    type: array
+                    uniqueItems: true
+                    items:
+                      $ref: '#/components/schemas/resource'
+
+  /documents/{id}:
+    parameters:
+      - $ref: '#/components/parameters/item_id'
+    get:
+      description: View document
+      tags:
+        - documents
+      operationId: getDocument
+      responses:
+        '200':
+          description: Returns single comment
+          content:
+            application/vnd.api+json:
+              schema:
+                type: object
+                properties:
+                  jsonapi:
+                    $ref: '#/components/schemas/jsonapi'
+                  links:
+                    type: object
+                    properties:
+                      self:
+                        $ref: '#/components/schemas/link'
+                  data:
+                    $ref: '#/components/schemas/Document'
+                  included:
+                    type: array
+                    uniqueItems: true
+                    items:
+                      $ref: '#/components/schemas/resource'
+
+
   /places:
     get:
       description: List Places
@@ -140,6 +331,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/page_size'
         - $ref: '#/components/parameters/page_number'
+      operationId: listPlaces
       responses:
         '200':
           description: A list of places
@@ -169,6 +361,7 @@ paths:
       description: View Place
       tags:
         - places
+      operationId: getPlace
       responses:
         '200':
           description: Returns single place
@@ -324,14 +517,20 @@ components:
     pagination:
       type: object
       properties:
-        first:
+        currentPage:
           $ref: '#/components/schemas/pageref'
-        last:
+        from:
           $ref: '#/components/schemas/pageref'
-        prev:
+        lastPage:
           $ref: '#/components/schemas/pageref'
-        next:
+        perPage:
           $ref: '#/components/schemas/pageref'
+        to:
+          $ref: '#/components/schemas/pageref'
+        total:
+          $ref: '#/components/schemas/pageref'
+    pageref:
+      type: integer
     meta:
       type: object
       additionalProperties: true
@@ -357,6 +556,7 @@ components:
         id:
           $ref: '#/components/schemas/id'
         attributes:
+          title: Agent attributes
           type: object
           properties:
             id:
@@ -370,6 +570,7 @@ components:
             description:
               type: string
         relationships:
+          title: Agent relationships
           type: object
           properties:
             birthdate:
@@ -400,6 +601,7 @@ components:
         id:
           $ref: '#/components/schemas/id'
         attributes:
+          title: Album attributes
           type: object
           properties:
             id:
@@ -413,6 +615,7 @@ components:
             description:
               type: string
         relationships:
+          title: Album relationships
           type: object
           properties:
             date:
@@ -429,6 +632,135 @@ components:
             self:
               $ref: '#/components/schemas/link'
 
+    Collection:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/type'
+        id:
+          $ref: '#/components/schemas/id'
+        attributes:
+          title: Collection attributes
+          type: object
+          properties:
+            id:
+              type: integer
+            label:
+              type: string
+            signature:
+              type: string
+            description:
+              type: string
+            creator:
+              type: string
+            origin:
+              type: string
+        relationships:
+          title: Collection relationships
+          type: object
+          properties:
+            altLabels:
+              $ref: '#/components/schemas/reltomany'
+            date:
+              $ref: '#/components/schemas/reltoone'
+            agents:
+              $ref: '#/components/schemas/reltomany'
+            literatures:
+              $ref: '#/components/schemas/reltomany'
+            comments:
+              $ref: '#/components/schemas/reltomany'
+            images:
+              $ref: '#/components/schemas/reltomany'
+            documents:
+              $ref: '#/components/schemas/reltomany'
+            notes:
+              $ref: '#/components/schemas/reltomany'
+            maps:
+              $ref: '#/components/schemas/reltomany'
+            calls:
+              $ref: '#/components/schemas/reltomany'
+            keywords:
+              $ref: '#/components/schemas/reltomany'
+        links:
+          type: object
+          properties:
+            self:
+              $ref: '#/components/schemas/link'
+              
+    Comment:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/type'
+        id:
+          $ref: '#/components/schemas/id'
+        attributes:
+          title: Comment attributes
+          type: object
+          properties:
+            id:
+              type: integer
+            comment:
+              type: string
+        relationships:
+          title: Comment relationships
+          type: object
+          properties:
+            image:
+              $ref: '#/components/schemas/reltoone'
+            collection:
+              $ref: '#/components/schemas/reltoone'
+            album:
+              $ref: '#/components/schemas/reltoone'
+            agent:
+              $ref: '#/components/schemas/reltoone'
+        links:
+          type: object
+          properties:
+            self:
+              $ref: '#/components/schemas/link'
+
+    Document:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/type'
+        id:
+          $ref: '#/components/schemas/id'
+        attributes:
+          title: Document attributes
+          type: object
+          properties:
+            id:
+              type: integer
+            label:
+              type: string
+            comment:
+              type: string
+            file_name:
+              type: string
+            original_file_name:
+              type: string
+            base_path:
+              type: string
+        relationships:
+          title: Document relationships
+          type: object
+          properties:
+            aggregations:
+              $ref: '#/components/schemas/reltomany'
+            collections:
+              $ref: '#/components/schemas/reltomany'
+            maps:
+              $ref: '#/components/schemas/reltomany'
+            map-entries:
+              $ref: '#/components/schemas/reltomany'
+        links:
+          type: object
+          properties:
+            self:
+              $ref: '#/components/schemas/link'
+
     Place:
       type: object
       properties:
@@ -437,6 +769,7 @@ components:
         id:
           $ref: '#/components/schemas/id'
         attributes:
+          title: Place attributes
           type: object
           properties:
             id:
@@ -466,6 +799,7 @@ components:
             wiki_uri:
               type: string
         relationships:
+          title: Place relationships
           type: object
           properties:
             images:

@@ -11,6 +11,7 @@
     "/agents" : {
       "get" : {
         "description" : "List Agents",
+        "operationId" : "listAgents",
         "parameters" : [ {
           "description" : "How many results should load per page",
           "explode" : true,
@@ -39,7 +40,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/_agents_get_200_response"
+                  "$ref" : "#/components/schemas/listAgents_200_response"
                 }
               }
             },
@@ -52,6 +53,7 @@
     "/agents/{id}" : {
       "get" : {
         "description" : "View Agent",
+        "operationId" : "getAgent",
         "parameters" : [ {
           "description" : "the agent id",
           "explode" : false,
@@ -68,7 +70,7 @@
             "content" : {
               "application/vnd.api+json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/_agents__id__get_200_response"
+                  "$ref" : "#/components/schemas/getAgent_200_response"
                 }
               }
             },
@@ -81,6 +83,7 @@
     "/albums" : {
       "get" : {
         "description" : "List Albums",
+        "operationId" : "listAlbums",
         "parameters" : [ {
           "description" : "How many results should load per page",
           "explode" : true,
@@ -109,7 +112,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/_albums_get_200_response"
+                  "$ref" : "#/components/schemas/listAlbums_200_response"
                 }
               }
             },
@@ -122,6 +125,7 @@
     "/albums/{id}" : {
       "get" : {
         "description" : "View Album",
+        "operationId" : "getAlbum",
         "parameters" : [ {
           "description" : "the agent id",
           "explode" : false,
@@ -138,7 +142,7 @@
             "content" : {
               "application/vnd.api+json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/_albums__id__get_200_response"
+                  "$ref" : "#/components/schemas/getAlbum_200_response"
                 }
               }
             },
@@ -148,9 +152,10 @@
         "tags" : [ "albums" ]
       }
     },
-    "/places" : {
+    "/collections" : {
       "get" : {
-        "description" : "List Places",
+        "description" : "List Collections",
+        "operationId" : "listCollections",
         "parameters" : [ {
           "description" : "How many results should load per page",
           "explode" : true,
@@ -179,19 +184,20 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/_places_get_200_response"
+                  "$ref" : "#/components/schemas/listCollections_200_response"
                 }
               }
             },
-            "description" : "A list of places"
+            "description" : "A list of collections"
           }
         },
-        "tags" : [ "places" ]
+        "tags" : [ "collections" ]
       }
     },
-    "/places/{id}" : {
+    "/collections/{id}" : {
       "get" : {
-        "description" : "View Place",
+        "description" : "View collection",
+        "operationId" : "getCollection",
         "parameters" : [ {
           "description" : "the agent id",
           "explode" : false,
@@ -208,7 +214,223 @@
             "content" : {
               "application/vnd.api+json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/_places__id__get_200_response"
+                  "$ref" : "#/components/schemas/getCollection_200_response"
+                }
+              }
+            },
+            "description" : "Returns single collection"
+          }
+        },
+        "tags" : [ "collections" ]
+      }
+    },
+    "/comments" : {
+      "get" : {
+        "description" : "List comments",
+        "operationId" : "listComments",
+        "parameters" : [ {
+          "description" : "How many results should load per page",
+          "explode" : true,
+          "in" : "query",
+          "name" : "page[size]",
+          "required" : false,
+          "schema" : {
+            "minimum" : 0,
+            "type" : "integer"
+          },
+          "style" : "form"
+        }, {
+          "description" : "Which page of the pagination should be displayed",
+          "explode" : true,
+          "in" : "query",
+          "name" : "page[number]",
+          "required" : false,
+          "schema" : {
+            "minimum" : 0,
+            "type" : "integer"
+          },
+          "style" : "form"
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/listComments_200_response"
+                }
+              }
+            },
+            "description" : "A list of collections"
+          }
+        },
+        "tags" : [ "comments" ]
+      }
+    },
+    "/comments/{id}" : {
+      "get" : {
+        "description" : "View comment",
+        "operationId" : "getComment",
+        "parameters" : [ {
+          "description" : "the agent id",
+          "explode" : false,
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "style" : "simple"
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/vnd.api+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/getComment_200_response"
+                }
+              }
+            },
+            "description" : "Returns single comment"
+          }
+        },
+        "tags" : [ "comments" ]
+      }
+    },
+    "/documents" : {
+      "get" : {
+        "description" : "List documents",
+        "operationId" : "listDocuments",
+        "parameters" : [ {
+          "description" : "How many results should load per page",
+          "explode" : true,
+          "in" : "query",
+          "name" : "page[size]",
+          "required" : false,
+          "schema" : {
+            "minimum" : 0,
+            "type" : "integer"
+          },
+          "style" : "form"
+        }, {
+          "description" : "Which page of the pagination should be displayed",
+          "explode" : true,
+          "in" : "query",
+          "name" : "page[number]",
+          "required" : false,
+          "schema" : {
+            "minimum" : 0,
+            "type" : "integer"
+          },
+          "style" : "form"
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/listDocuments_200_response"
+                }
+              }
+            },
+            "description" : "A list of collections"
+          }
+        },
+        "tags" : [ "comments" ]
+      }
+    },
+    "/documents/{id}" : {
+      "get" : {
+        "description" : "View document",
+        "operationId" : "getDocument",
+        "parameters" : [ {
+          "description" : "the agent id",
+          "explode" : false,
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "style" : "simple"
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/vnd.api+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/getDocument_200_response"
+                }
+              }
+            },
+            "description" : "Returns single comment"
+          }
+        },
+        "tags" : [ "documents" ]
+      }
+    },
+    "/places" : {
+      "get" : {
+        "description" : "List Places",
+        "operationId" : "listPlaces",
+        "parameters" : [ {
+          "description" : "How many results should load per page",
+          "explode" : true,
+          "in" : "query",
+          "name" : "page[size]",
+          "required" : false,
+          "schema" : {
+            "minimum" : 0,
+            "type" : "integer"
+          },
+          "style" : "form"
+        }, {
+          "description" : "Which page of the pagination should be displayed",
+          "explode" : true,
+          "in" : "query",
+          "name" : "page[number]",
+          "required" : false,
+          "schema" : {
+            "minimum" : 0,
+            "type" : "integer"
+          },
+          "style" : "form"
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/listPlaces_200_response"
+                }
+              }
+            },
+            "description" : "A list of places"
+          }
+        },
+        "tags" : [ "places" ]
+      }
+    },
+    "/places/{id}" : {
+      "get" : {
+        "description" : "View Place",
+        "operationId" : "getPlace",
+        "parameters" : [ {
+          "description" : "the agent id",
+          "explode" : false,
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "style" : "simple"
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/vnd.api+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/getPlace_200_response"
                 }
               }
             },
@@ -375,20 +597,29 @@
       },
       "pagination" : {
         "properties" : {
-          "first" : {
+          "currentPage" : {
             "$ref" : "#/components/schemas/pageref"
           },
-          "last" : {
+          "from" : {
             "$ref" : "#/components/schemas/pageref"
           },
-          "prev" : {
+          "lastPage" : {
             "$ref" : "#/components/schemas/pageref"
           },
-          "next" : {
+          "perPage" : {
+            "$ref" : "#/components/schemas/pageref"
+          },
+          "to" : {
+            "$ref" : "#/components/schemas/pageref"
+          },
+          "total" : {
             "$ref" : "#/components/schemas/pageref"
           }
         },
         "type" : "object"
+      },
+      "pageref" : {
+        "type" : "integer"
       },
       "meta" : {
         "additionalProperties" : true,
@@ -421,7 +652,7 @@
             "$ref" : "#/components/schemas/Agent_relationships"
           },
           "links" : {
-            "$ref" : "#/components/schemas/_agents__id__get_200_response_links"
+            "$ref" : "#/components/schemas/getAgent_200_response_links"
           }
         },
         "type" : "object"
@@ -441,7 +672,67 @@
             "$ref" : "#/components/schemas/Album_relationships"
           },
           "links" : {
-            "$ref" : "#/components/schemas/_agents__id__get_200_response_links"
+            "$ref" : "#/components/schemas/getAgent_200_response_links"
+          }
+        },
+        "type" : "object"
+      },
+      "Collection" : {
+        "properties" : {
+          "type" : {
+            "$ref" : "#/components/schemas/type"
+          },
+          "id" : {
+            "$ref" : "#/components/schemas/id"
+          },
+          "attributes" : {
+            "$ref" : "#/components/schemas/Collection_attributes"
+          },
+          "relationships" : {
+            "$ref" : "#/components/schemas/Collection_relationships"
+          },
+          "links" : {
+            "$ref" : "#/components/schemas/getAgent_200_response_links"
+          }
+        },
+        "type" : "object"
+      },
+      "Comment" : {
+        "properties" : {
+          "type" : {
+            "$ref" : "#/components/schemas/type"
+          },
+          "id" : {
+            "$ref" : "#/components/schemas/id"
+          },
+          "attributes" : {
+            "$ref" : "#/components/schemas/Comment_attributes"
+          },
+          "relationships" : {
+            "$ref" : "#/components/schemas/Comment_relationships"
+          },
+          "links" : {
+            "$ref" : "#/components/schemas/getAgent_200_response_links"
+          }
+        },
+        "type" : "object"
+      },
+      "Document" : {
+        "properties" : {
+          "type" : {
+            "$ref" : "#/components/schemas/type"
+          },
+          "id" : {
+            "$ref" : "#/components/schemas/id"
+          },
+          "attributes" : {
+            "$ref" : "#/components/schemas/Document_attributes"
+          },
+          "relationships" : {
+            "$ref" : "#/components/schemas/Document_relationships"
+          },
+          "links" : {
+            "$ref" : "#/components/schemas/getAgent_200_response_links"
           }
         },
         "type" : "object"
@@ -461,12 +752,12 @@
             "$ref" : "#/components/schemas/Place_relationships"
           },
           "links" : {
-            "$ref" : "#/components/schemas/_agents__id__get_200_response_links"
+            "$ref" : "#/components/schemas/getAgent_200_response_links"
           }
         },
         "type" : "object"
       },
-      "_agents_get_200_response" : {
+      "listAgents_200_response" : {
         "properties" : {
           "jsonapi" : {
             "$ref" : "#/components/schemas/jsonapi"
@@ -490,7 +781,7 @@
         },
         "type" : "object"
       },
-      "_agents__id__get_200_response_links" : {
+      "getAgent_200_response_links" : {
         "properties" : {
           "self" : {
             "$ref" : "#/components/schemas/link"
@@ -498,13 +789,13 @@
         },
         "type" : "object"
       },
-      "_agents__id__get_200_response" : {
+      "getAgent_200_response" : {
         "properties" : {
           "jsonapi" : {
             "$ref" : "#/components/schemas/jsonapi"
           },
           "links" : {
-            "$ref" : "#/components/schemas/_agents__id__get_200_response_links"
+            "$ref" : "#/components/schemas/getAgent_200_response_links"
           },
           "data" : {
             "$ref" : "#/components/schemas/Agent"
@@ -519,7 +810,7 @@
         },
         "type" : "object"
       },
-      "_albums_get_200_response" : {
+      "listAlbums_200_response" : {
         "properties" : {
           "jsonapi" : {
             "$ref" : "#/components/schemas/jsonapi"
@@ -543,13 +834,13 @@
         },
         "type" : "object"
       },
-      "_albums__id__get_200_response" : {
+      "getAlbum_200_response" : {
         "properties" : {
           "jsonapi" : {
             "$ref" : "#/components/schemas/jsonapi"
           },
           "links" : {
-            "$ref" : "#/components/schemas/_agents__id__get_200_response_links"
+            "$ref" : "#/components/schemas/getAgent_200_response_links"
           },
           "data" : {
             "$ref" : "#/components/schemas/Album"
@@ -564,7 +855,142 @@
         },
         "type" : "object"
       },
-      "_places_get_200_response" : {
+      "listCollections_200_response" : {
+        "properties" : {
+          "jsonapi" : {
+            "$ref" : "#/components/schemas/jsonapi"
+          },
+          "links" : {
+            "$ref" : "#/components/schemas/pagination"
+          },
+          "data" : {
+            "items" : {
+              "$ref" : "#/components/schemas/Collection"
+            },
+            "type" : "array"
+          },
+          "included" : {
+            "items" : {
+              "$ref" : "#/components/schemas/resource"
+            },
+            "type" : "array",
+            "uniqueItems" : true
+          }
+        },
+        "type" : "object"
+      },
+      "getCollection_200_response" : {
+        "properties" : {
+          "jsonapi" : {
+            "$ref" : "#/components/schemas/jsonapi"
+          },
+          "links" : {
+            "$ref" : "#/components/schemas/getAgent_200_response_links"
+          },
+          "data" : {
+            "$ref" : "#/components/schemas/Collection"
+          },
+          "included" : {
+            "items" : {
+              "$ref" : "#/components/schemas/resource"
+            },
+            "type" : "array",
+            "uniqueItems" : true
+          }
+        },
+        "type" : "object"
+      },
+      "listComments_200_response" : {
+        "properties" : {
+          "jsonapi" : {
+            "$ref" : "#/components/schemas/jsonapi"
+          },
+          "links" : {
+            "$ref" : "#/components/schemas/pagination"
+          },
+          "data" : {
+            "items" : {
+              "$ref" : "#/components/schemas/Comment"
+            },
+            "type" : "array"
+          },
+          "included" : {
+            "items" : {
+              "$ref" : "#/components/schemas/resource"
+            },
+            "type" : "array",
+            "uniqueItems" : true
+          }
+        },
+        "type" : "object"
+      },
+      "getComment_200_response" : {
+        "properties" : {
+          "jsonapi" : {
+            "$ref" : "#/components/schemas/jsonapi"
+          },
+          "links" : {
+            "$ref" : "#/components/schemas/getAgent_200_response_links"
+          },
+          "data" : {
+            "$ref" : "#/components/schemas/Comment"
+          },
+          "included" : {
+            "items" : {
+              "$ref" : "#/components/schemas/resource"
+            },
+            "type" : "array",
+            "uniqueItems" : true
+          }
+        },
+        "type" : "object"
+      },
+      "listDocuments_200_response" : {
+        "properties" : {
+          "jsonapi" : {
+            "$ref" : "#/components/schemas/jsonapi"
+          },
+          "links" : {
+            "$ref" : "#/components/schemas/pagination"
+          },
+          "data" : {
+            "items" : {
+              "$ref" : "#/components/schemas/Document"
+            },
+            "type" : "array"
+          },
+          "included" : {
+            "items" : {
+              "$ref" : "#/components/schemas/resource"
+            },
+            "type" : "array",
+            "uniqueItems" : true
+          }
+        },
+        "type" : "object"
+      },
+      "getDocument_200_response" : {
+        "properties" : {
+          "jsonapi" : {
+            "$ref" : "#/components/schemas/jsonapi"
+          },
+          "links" : {
+            "$ref" : "#/components/schemas/getAgent_200_response_links"
+          },
+          "data" : {
+            "$ref" : "#/components/schemas/Document"
+          },
+          "included" : {
+            "items" : {
+              "$ref" : "#/components/schemas/resource"
+            },
+            "type" : "array",
+            "uniqueItems" : true
+          }
+        },
+        "type" : "object"
+      },
+      "listPlaces_200_response" : {
         "properties" : {
           "jsonapi" : {
             "$ref" : "#/components/schemas/jsonapi"
@@ -588,13 +1014,13 @@
         },
         "type" : "object"
       },
-      "_places__id__get_200_response" : {
+      "getPlace_200_response" : {
         "properties" : {
           "jsonapi" : {
             "$ref" : "#/components/schemas/jsonapi"
           },
           "links" : {
-            "$ref" : "#/components/schemas/_agents__id__get_200_response_links"
+            "$ref" : "#/components/schemas/getAgent_200_response_links"
           },
           "data" : {
             "$ref" : "#/components/schemas/Place"
@@ -641,6 +1067,7 @@
             "type" : "string"
           }
         },
+        "title" : "Agent attributes",
         "type" : "object"
       },
       "Agent_relationships" : {
@@ -667,6 +1094,7 @@
             "$ref" : "#/components/schemas/reltomany"
           }
         },
+        "title" : "Agent relationships",
         "type" : "object"
       },
       "Album_attributes" : {
@@ -687,6 +1115,7 @@
             "type" : "string"
           }
         },
+        "title" : "Album attributes",
         "type" : "object"
       },
       "Album_relationships" : {
@@ -704,6 +1133,142 @@
             "$ref" : "#/components/schemas/reltomany"
           }
         },
+        "title" : "Album relationships",
+        "type" : "object"
+      },
+      "Collection_attributes" : {
+        "properties" : {
+          "id" : {
+            "type" : "integer"
+          },
+          "label" : {
+            "type" : "string"
+          },
+          "signature" : {
+            "type" : "string"
+          },
+          "description" : {
+            "type" : "string"
+          },
+          "creator" : {
+            "type" : "string"
+          },
+          "origin" : {
+            "type" : "string"
+          }
+        },
+        "title" : "Collection attributes",
+        "type" : "object"
+      },
+      "Collection_relationships" : {
+        "properties" : {
+          "altLabels" : {
+            "$ref" : "#/components/schemas/reltomany"
+          },
+          "date" : {
+            "$ref" : "#/components/schemas/reltoone"
+          },
+          "agents" : {
+            "$ref" : "#/components/schemas/reltomany"
+          },
+          "literatures" : {
+            "$ref" : "#/components/schemas/reltomany"
+          },
+          "comments" : {
+            "$ref" : "#/components/schemas/reltomany"
+          },
+          "images" : {
+            "$ref" : "#/components/schemas/reltomany"
+          },
+          "documents" : {
+            "$ref" : "#/components/schemas/reltomany"
+          },
+          "notes" : {
+            "$ref" : "#/components/schemas/reltomany"
+          },
+          "maps" : {
+            "$ref" : "#/components/schemas/reltomany"
+          },
+          "calls" : {
+            "$ref" : "#/components/schemas/reltomany"
+          },
+          "keywords" : {
+            "$ref" : "#/components/schemas/reltomany"
+          }
+        },
+        "title" : "Collection relationships",
+        "type" : "object"
+      },
+      "Comment_attributes" : {
+        "properties" : {
+          "id" : {
+            "type" : "integer"
+          },
+          "comment" : {
+            "type" : "string"
+          }
+        },
+        "title" : "Comment attributes",
+        "type" : "object"
+      },
+      "Comment_relationships" : {
+        "properties" : {
+          "image" : {
+            "$ref" : "#/components/schemas/reltoone"
+          },
+          "collection" : {
+            "$ref" : "#/components/schemas/reltoone"
+          },
+          "album" : {
+            "$ref" : "#/components/schemas/reltoone"
+          },
+          "agent" : {
+            "$ref" : "#/components/schemas/reltoone"
+          }
+        },
+        "title" : "Comment relationships",
+        "type" : "object"
+      },
+      "Document_attributes" : {
+        "properties" : {
+          "id" : {
+            "type" : "integer"
+          },
+          "label" : {
+            "type" : "string"
+          },
+          "comment" : {
+            "type" : "string"
+          },
+          "file_name" : {
+            "type" : "string"
+          },
+          "original_file_name" : {
+            "type" : "string"
+          },
+          "base_path" : {
+            "type" : "string"
+          }
+        },
+        "title" : "Document attributes",
+        "type" : "object"
+      },
+      "Document_relationships" : {
+        "properties" : {
+          "aggregations" : {
+            "$ref" : "#/components/schemas/reltomany"
+          },
+          "collections" : {
+            "$ref" : "#/components/schemas/reltomany"
+          },
+          "maps" : {
+            "$ref" : "#/components/schemas/reltomany"
+          },
+          "map-entries" : {
+            "$ref" : "#/components/schemas/reltomany"
+          }
+        },
+        "title" : "Document relationships",
         "type" : "object"
       },
       "Place_attributes" : {
@@ -747,6 +1312,7 @@
             "type" : "string"
           }
         },
+        "title" : "Place attributes",
         "type" : "object"
       },
       "Place_relationships" : {
@@ -755,6 +1321,7 @@
             "$ref" : "#/components/schemas/reltomany"
           }
         },
+        "title" : "Place relationships",
         "type" : "object"
       }
     }

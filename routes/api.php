@@ -63,6 +63,8 @@ JsonApiRoute::server('v1')
         $server->resource('documents', JsonApiController::class)->relationships(function ($relationships) {
             $relationships->hasMany('images');
             $relationships->hasMany('collections');
+            $relationships->hasMany('maps');
+            $relationships->hasMany('map-entries');
         });
 
         $server->resource('keywords', JsonApiController::class)->relationships(function ($relationships) {

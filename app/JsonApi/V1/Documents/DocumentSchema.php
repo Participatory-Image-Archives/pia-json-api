@@ -39,6 +39,8 @@ class DocumentSchema extends Schema
 
             BelongsToMany::make('images'),
             BelongsToMany::make('collections'),
+            BelongsToMany::make('maps'),
+            BelongsToMany::make('map-entries'),
 
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
