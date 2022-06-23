@@ -264,7 +264,7 @@ paths:
     get:
       description: List documents
       tags:
-        - comments
+        - documents
       operationId: listDocuments
       parameters:
         - $ref: '#/components/parameters/page_size'

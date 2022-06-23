@@ -335,7 +335,7 @@
             "description" : "A list of collections"
           }
         },
-        "tags" : [ "comments" ]
+        "tags" : [ "documents" ]
       }
     },
     "/documents/{id}" : {
